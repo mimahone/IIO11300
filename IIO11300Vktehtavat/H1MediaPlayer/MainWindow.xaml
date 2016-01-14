@@ -1,0 +1,14 @@
+﻿<Window x:Class="H1MediaPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H1MediaPlayer"
+        mc:Ignorable="d"
+        Title="My Finest Media Player" Height="350" Width="525" FontSize="18">
+    <Grid>
+        <Button x:Name="btnPlay" Content="Soita rockia" Margin="38,10,379,0" VerticalAlignment="Top" Width="100" />
+        <Button x:Name="btnPause" Content="Pauseta" Margin="143,10,274,0" VerticalAlignment="Top" Width="100" />
+        <Button x:Name="btnStop" Content="Soitto seis" Margin="248,10,169,0" VerticalAlignment="Top" Width="100" />
+    </Grid>
+</Window>
