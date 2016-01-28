@@ -1,0 +1,44 @@
+﻿<Window x:Class="H3MittausData.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H3MittausData"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" FontSize="18">
+    <Grid>
+        <TabControl x:Name="tabControl" 
+                    HorizontalAlignment="Stretch" 
+                    Margin="10,10,0,0" VerticalAlignment="Stretch" >
+            <TabItem Header="Data Input">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tänään on:"/>
+                            <TextBlock x:Name="txtToday"/>
+                            <TextBlock Text="Tiedostonimi:" Margin="10,0,0,0"/>
+                            <TextBox x:Name="txtFileName" Text="d:\temp\testi.txt"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="klo:" />
+                            <TextBox x:Name="txtClock" Width="60"/>
+                            <TextBlock Text="mittaustulos:" />
+                            <TextBox x:Name="txtData" Width="60"/>
+                            <Button x:Name="btnSaveData" Content="New data" Margin="10,0,0,0" Click="btnSaveData_Click"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <ListBox Name="lbData" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Reports">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

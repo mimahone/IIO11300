@@ -1,7 +1,7 @@
 ﻿/*
 * Copyright (C) JAMK/IT/Esa Salmikangas
 * This file is part of the IIO11300 course project.
-* Created: 12.1.2016 Modified: 13.1.2016
+* Created: 12.1.2016 Modified: 20.1.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 using System;
@@ -21,7 +21,6 @@ namespace Tehtava1
 
     private void btnCalculate_Click(object sender, RoutedEventArgs e)
     {
-      //TODO
       try
       {
         double l = Math.Abs(double.Parse(txtWidth.Text));
@@ -44,6 +43,26 @@ namespace Tehtava1
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
       Application.Current.Shutdown();
+    }
+
+    /// <summary>
+    /// Lasketaan pinta-ala Ikkuna-olion avulla
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void btnCalculateAreaOO_Click(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        JAMK.IT.IIO11300.Ikkuna ikk = new JAMK.IT.IIO11300.Ikkuna();
+        ikk.Korkeus = double.Parse(txtHeight.Text);
+        ikk.Leveys = double.Parse(txtWidth.Text);
+        MessageBox.Show(ikk.LaskePintaAla().ToString());
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
+      }
     }
   }
 

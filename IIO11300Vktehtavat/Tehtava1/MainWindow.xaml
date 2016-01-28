@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tehtava1"
         mc:Ignorable="d"
-        Title="Oy K-S Windows Ab" Height="370" Width="725" FontSize="18">
+        Title="Oy K-S Windows Ab" Height="402.904" Width="725" FontSize="18">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
@@ -21,6 +21,7 @@
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btnCalculate" Content="Laske pinta-ala ja piiri" Height="32" Width="180" Click="btnCalculate_Click" Margin="10,10,10,0"/>
+                <Button x:Name="btnCalculateAreaOO" Content="Laske pinta-ala (OO)" Height="32" Width="180" Click="btnCalculateAreaOO_Click" Margin="10,10,10,0"/>
                 <TextBlock x:Name="tbResult1" Text="Ikkunan pinta-ala:" Height="28" Margin="10,10,10,0" />
                 <TextBox x:Name="txtResult1" Text="0" Height="28" Width="114" Margin="10,10,10,0" TextAlignment="Center" IsEnabled="False" Background="#C0C0C0" />
                 <TextBlock x:Name="tbResult2" Text="Karmin piiri:" Height="28" Margin="10,10,10,0" />

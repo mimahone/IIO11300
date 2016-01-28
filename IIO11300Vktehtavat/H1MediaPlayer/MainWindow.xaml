@@ -5,10 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:H1MediaPlayer"
         mc:Ignorable="d"
-        Title="My Finest Media Player" Height="350" Width="525" FontSize="18">
+        Title="My Finest Media Player" Height="400" Width="525" FontSize="18">
     <Grid>
-        <Button x:Name="btnPlay" Content="Soita rockia" Margin="38,10,379,0" VerticalAlignment="Top" Width="100" />
-        <Button x:Name="btnPause" Content="Pauseta" Margin="143,10,274,0" VerticalAlignment="Top" Width="100" />
-        <Button x:Name="btnStop" Content="Soitto seis" Margin="248,10,169,0" VerticalAlignment="Top" Width="100" />
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="txtFileName" Width="200" />
+                <Button x:Name="btnBrowse" Content="Browse..." Margin="10,0,0,0" Click="btnBrowse_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnPlay" Content="Play" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Click="btnPlay_Click" />
+                <Button x:Name="btnPause" Content="Pause" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Click="btnPause_Click" IsEnabled="False" />
+                <Button x:Name="btnStop" Content="Stop" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Click="btnStop_Click" IsEnabled="False" />
+                <Button x:Name="btnClose" Content="Close" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Click="btnClose_Click" />
+            </StackPanel>
+            <StackPanel>
+                <MediaElement x:Name="mediaElement" Width="500" Height="300" LoadedBehavior="Manual" UnloadedBehavior="Stop" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
