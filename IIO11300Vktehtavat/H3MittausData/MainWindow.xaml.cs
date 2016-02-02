@@ -34,17 +34,24 @@ namespace H3MittausData
       txtToday.Text = DateTime.Today.ToShortDateString();
     }
 
-    private void getSavedData(string path)
+    private void viewSavedData(string path)
     {
       var lines = File.ReadLines(path);
+      var mdList = new List<MittausData>();
 
       foreach (var line in lines)
       {
-        lbData.Items.Add(line);
+        var items = line.Split('=');
+        mdList.Add(new MittausData(items[0], items[1]));
+      }
+
+      foreach (var md in mdList)
+      {
+        lbData.Items.Add(md);
       }
     }
 
-    private string parseSavingData()
+    private string getSavingData()
     {
       var sb = new StringBuilder();
 
@@ -74,7 +81,7 @@ namespace H3MittausData
         if (ofd.ShowDialog() == true)
         {
           txtFileName.Text = ofd.FileName;
-          getSavedData(ofd.FileName);
+          viewSavedData(ofd.FileName);
         }
       }
       catch (Exception ex)
@@ -93,7 +100,7 @@ namespace H3MittausData
         sfd.Filter = "Text files|*.txt|All files|*.*";
         if (sfd.ShowDialog() == true)
         {
-          File.WriteAllText(sfd.FileName, parseSavingData());
+          File.WriteAllText(sfd.FileName, getSavingData());
         }
       }
       catch (Exception ex)
