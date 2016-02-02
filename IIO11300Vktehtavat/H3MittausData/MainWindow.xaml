@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:H3MittausData"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" FontSize="18">
+        Title="MainWindow" Height="350" Width="600" FontSize="18">
     <Grid>
         <TabControl x:Name="tabControl" 
                     HorizontalAlignment="Stretch" 
@@ -18,6 +18,8 @@
                             <TextBlock x:Name="txtToday"/>
                             <TextBlock Text="Tiedostonimi:" Margin="10,0,0,0"/>
                             <TextBox x:Name="txtFileName" Text="d:\temp\testi.txt"/>
+                            <Button x:Name="btnBrowse" Content="Browse..." Margin="10,0,0,0" Click="btnBrowse_Click" />
+                            <Button x:Name="btnSave" Content="Save" Margin="10,0,0,0" Click="btnSave_Click" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="klo:" />

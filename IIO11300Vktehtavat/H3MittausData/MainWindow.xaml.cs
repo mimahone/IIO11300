@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JAMK.IT.IIO11300;
+using Microsoft.Win32;
 
 namespace H3MittausData
 {
@@ -32,11 +34,72 @@ namespace H3MittausData
       txtToday.Text = DateTime.Today.ToShortDateString();
     }
 
+    private void getSavedData(string path)
+    {
+      var lines = File.ReadLines(path);
+
+      foreach (var line in lines)
+      {
+        lbData.Items.Add(line);
+      }
+    }
+
+    private string parseSavingData()
+    {
+      var sb = new StringBuilder();
+
+      foreach (var item in lbData.Items)
+      {
+        sb.AppendLine(item.ToString());
+      }
+
+      return sb.ToString();
+    }
+
     private void btnSaveData_Click(object sender, RoutedEventArgs e)
     {
       //luodaan uusi mittausdata olio ja näytetään se käyttäjälle
       MittausData md = new MittausData(txtClock.Text, txtData.Text);
       lbData.Items.Add(md);
+    }
+
+    private void btnBrowse_Click(object sender, RoutedEventArgs e)
+    {
+      var ofd = new OpenFileDialog();
+
+      try
+      {
+        ofd.InitialDirectory = @"C:\temp\";
+        ofd.Filter = "Text files|*.txt|All files|*.*";
+        if (ofd.ShowDialog() == true)
+        {
+          txtFileName.Text = ofd.FileName;
+          getSavedData(ofd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Tiedoston haku ei onnistunut: " + ex.Message);
+      }
+    }
+
+    private void btnSave_Click(object sender, RoutedEventArgs e)
+    {
+      var sfd = new SaveFileDialog();
+
+      try
+      {
+        sfd.InitialDirectory = @"C:\temp\";
+        sfd.Filter = "Text files|*.txt|All files|*.*";
+        if (sfd.ShowDialog() == true)
+        {
+          File.WriteAllText(sfd.FileName, parseSavingData());
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Tiedostoon tallennus ei onnistunut: " + ex.Message);
+      }
     }
   }
 }
