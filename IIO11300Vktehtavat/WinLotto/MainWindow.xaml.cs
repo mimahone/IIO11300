@@ -145,5 +145,61 @@ namespace WinLotto
         txtRaffledNumbers.Text = ""; 
       }
     }
+
+    private void btnCheckNumbers_Click(object sender, RoutedEventArgs e)
+    {
+      if (txtRaffledNumbers == null || string.IsNullOrWhiteSpace(txtRaffledNumbers.Text))
+      {
+        MessageBox.Show("Tarkistusta ei voi tehdä koska arvottuja numeroita ei ole syötetty.");
+        return;
+      }
+
+      int numbers, maxNumber;
+
+      switch ((Lotto.GameVersion)cboGame.SelectedIndex)
+      {
+        case Lotto.GameVersion.Viking:
+          numbers = 6;
+          maxNumber = 48;
+          break;
+
+        case Lotto.GameVersion.Eurojackpot: // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
+          numbers = 5;
+          maxNumber = 50;
+          break;
+
+        default: // Suomi 7/39
+          numbers = 7;
+          maxNumber = 39;
+          break;
+      }
+
+      try
+      {
+        HashSet<int> raffledNumbers = new HashSet<int>(Array.ConvertAll(txtRaffledNumbers.Text.Split(','), int.Parse));
+
+        if (raffledNumbers.Count != numbers)
+        {
+          MessageBox.Show("Arvotut numerot eivät sisällä oikeaa määrää numeroita. Pitäisi olla " + numbers + " numeroa.");
+          return;
+        }
+
+        foreach (var number in raffledNumbers)
+        {
+          if (number < 1 || number > maxNumber)
+          {
+            MessageBox.Show("Arvottu numero " + number + " on virheellinen. Pitäisi olla numero väliltä 1 - " + maxNumber + ".");
+            return;
+          }
+        }
+
+        // Tarkastus valitusta tiedostosta
+        //todo...
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Arvotut numerot sisältävät virheellisiä merkkejä. Vain mahdolliset numerot ja niiden erotinpilkku on sallittuja. " + ex.Message);
+      }
+    }
   }
 }

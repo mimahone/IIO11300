@@ -26,7 +26,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <Button x:Name="btnSaveNumbers" Content="Save numbers" Margin="0" Width="120" Click="btnSaveNumbers_Click" />
-                <Button x:Name="btnCheckNumbers" Content="Check numbers" Margin="10,0,0,0" Width="120" />
+                <Button x:Name="btnCheckNumbers" Content="Check numbers" Margin="10,0,0,0" Width="120" Click="btnCheckNumbers_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <TextBlock x:Name="textBlock3" MinWidth="70" Margin="10,0,20,0" Text="Raffled numbers:" />
