@@ -6,7 +6,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WinLotto
 {
@@ -38,47 +37,55 @@ namespace WinLotto
 
     public int Drawns { get; set; }
 
-    public string Numbers {
-      get
+    public List<List<int>> NumbersList
+    {
+      get { return getNumbersList(); }
+    }
+
+    private List<List<int>> getNumbersList()
+    {
+      var numbersList = new List<List<int>>();
+      int numbers, maxNumber;
+
+      switch (Game)
       {
-        int numbers, maxNumber;
+        case GameVersion.Viking:
+          numbers = 6;
+          maxNumber = 48;
+          break;
 
-        switch (Game)
-        {
-          case GameVersion.Viking:
-            numbers = 6;
-            maxNumber = 48;
-            break;
+        case GameVersion.Eurojackpot: // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
+          numbers = 5;
+          maxNumber = 50;
+          break;
 
-          case GameVersion.Eurojackpot: // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
-            numbers = 5;
-            maxNumber = 50;
-            break;
-
-          default: // Suomi 7/39
-            numbers = 7;
-            maxNumber = 39;
-            break;
-        }
-
-        var sb = new StringBuilder();
-
-        for (int i = 0; i < Drawns; i++)
-        {
-          if (Game == GameVersion.Eurojackpot) // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
-          {
-            sb.Append(string.Join(", ", getRandomNumbers(numbers, maxNumber)));
-            sb.Append(" + tähtinumerot ");
-            sb.AppendLine(string.Join(" ja ", getRandomNumbers(2, 8)));
-          }
-          else
-          {
-            sb.AppendLine(string.Join(", ", getRandomNumbers(numbers, maxNumber)));
-          }
-        }
-
-        return sb.ToString();
+        default: // Suomi 7/39
+          numbers = 7;
+          maxNumber = 39;
+          break;
       }
+
+      for (int i = 0; i < Drawns; i++)
+      {
+        if (Game == GameVersion.Eurojackpot) // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
+        {
+          var baseNumbers = getRandomNumbers(numbers, maxNumber);
+          var startNumbers = getRandomNumbers(2, 8);
+
+          foreach (var startNumber in startNumbers)
+          {
+            baseNumbers.Add(startNumber);
+          }
+
+          numbersList.Add(baseNumbers);
+        }
+        else
+        {
+          numbersList.Add(getRandomNumbers(numbers, maxNumber));
+        }
+      }
+
+      return numbersList;
     }
 
     private List<int> getRandomNumbers(int numbers, int maxNumber)

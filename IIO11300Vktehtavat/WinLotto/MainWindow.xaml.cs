@@ -4,7 +4,12 @@
 * Created: 20.1.2016 Modified: 22.1.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
+using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace WinLotto
@@ -19,8 +24,24 @@ namespace WinLotto
       InitializeComponent();
     }
 
+    private List<List<int>> numbersList;
+
+    private string getSavingData()
+    {
+      var sb = new StringBuilder();
+
+      foreach (var numbers in numbersList)
+      {
+        sb.AppendLine(string.Join(",", numbers));
+      }
+
+      return sb.ToString();
+    }
+
     private void btnDraw_Click(object sender, RoutedEventArgs e)
     {
+      lbxNumbers.Items.Clear();
+
       try
       {
         if (int.Parse(txtDrawns.Text) < 1)
@@ -31,7 +52,38 @@ namespace WinLotto
         Lotto ltt = new Lotto();
         ltt.Game = (Lotto.GameVersion)cboGame.SelectedIndex;
         ltt.Drawns = int.Parse(txtDrawns.Text);
-        txtNumbers.Text = ltt.Numbers;
+        numbersList = ltt.NumbersList;
+
+        foreach (var numbers in numbersList)
+        {
+          if (ltt.Game == Lotto.GameVersion.Eurojackpot) // Eurojackpotissa 5/50 ja 2 tähtinumeroa luvuista 1-8
+          {
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < 7; i++)
+            {
+              switch (i)
+              {
+                case 5:
+                  sb.AppendFormat(" + tähtinumerot {0}", numbers[i]);
+                  break;
+                case 6:
+                  sb.AppendFormat(" ja {0}", numbers[i]);
+                  break;
+                default:
+                  if (i > 0) sb.Append(",");
+                  sb.Append(numbers[i]);
+                  break;
+              }
+            }
+            
+            lbxNumbers.Items.Add(sb.ToString());
+          }
+          else
+          {
+            lbxNumbers.Items.Add(string.Join(",", numbers));
+          }
+        }
       }
       catch (Exception ex)
       {
@@ -43,12 +95,55 @@ namespace WinLotto
     {
       cboGame.SelectedIndex = 0;
       txtDrawns.Text = "1";
-      txtNumbers.Text = "";
+      lbxNumbers.Items.Clear();
     }
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
       Application.Current.Shutdown();
+    }
+
+    private void btnSaveNumbers_Click(object sender, RoutedEventArgs e)
+    {
+      if (numbersList == null || numbersList.Count == 0)
+      {
+        MessageBox.Show("Tallennusta ei voi tehdä koska numeroita ei ole arvottu.");
+        return;
+      }
+
+      var sfd = new SaveFileDialog();
+
+      try
+      {
+        sfd.InitialDirectory = @"C:\temp\";
+
+        DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+        Calendar cal = dfi.Calendar;
+        sfd.FileName = string.Format("Lottorivit_{0}_{1}{2:00}.txt", cboGame.Text, DateTime.Today.Year, cal.GetWeekOfYear(DateTime.Today, dfi.CalendarWeekRule, dfi.FirstDayOfWeek));
+        sfd.Filter = "Text files|*.txt|All files|*.*";
+
+        if (sfd.ShowDialog() == true)
+        {
+          File.WriteAllText(sfd.FileName, getSavingData());
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Tiedostoon tallennus ei onnistunut: " + ex.Message);
+      }
+    }
+
+    private void cboGame_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+      if (lbxNumbers != null)
+      {
+        lbxNumbers.Items.Clear();
+      }
+
+      if (txtRaffledNumbers != null)
+      {
+        txtRaffledNumbers.Text = ""; 
+      }
     }
   }
 }
