@@ -193,12 +193,31 @@ namespace WinLotto
           }
         }
 
-        // Tarkastus valitusta tiedostosta
-        //todo...
+        if (string.IsNullOrWhiteSpace(txtFileName.Text) || !File.Exists(txtFileName.Text))
+        {
+          MessageBox.Show("Tarkistettavaa tiedostoa ei ole valittu tai sitä ei löydy.");
+          return;
+        }
+
+        // Tarkastus valitusta tiedostosta ja tuloksen näyttö
+        Lotto ltt = new Lotto();
+        MessageBox.Show("Tarkistuksen tulos:\n" + ltt.CheckFileNumbers(raffledNumbers, txtFileName.Text));
       }
       catch (Exception ex)
       {
         MessageBox.Show("Arvotut numerot sisältävät virheellisiä merkkejä. Vain mahdolliset numerot ja niiden erotinpilkku on sallittuja. " + ex.Message);
+      }
+    }
+
+    private void btnBrowse_Click(object sender, RoutedEventArgs e)
+    {
+      OpenFileDialog ofd = new OpenFileDialog();
+      ofd.InitialDirectory = @"C:\temp\";
+      ofd.Filter = "Text-files (*.txt)|*.txt|All files|*.*";
+
+      if (ofd.ShowDialog() == true)
+      {
+        txtFileName.Text = ofd.FileName;
       }
     }
   }

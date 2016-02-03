@@ -5,7 +5,9 @@
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Text;
 
 namespace WinLotto
 {
@@ -40,6 +42,36 @@ namespace WinLotto
     public List<List<int>> NumbersList
     {
       get { return getNumbersList(); }
+    }
+
+    public string CheckFileNumbers(HashSet<int> raffledNumbers, string filePath)
+    {
+      StringBuilder result = new StringBuilder();
+
+      if (File.Exists(filePath))
+      {
+        int l = 0;
+        var fileLines = File.ReadAllLines(filePath);
+
+        foreach (var fileLine in fileLines)
+        {
+          int matchCount = 0;
+          
+          HashSet<int> fileLineNumbers = new HashSet<int>(Array.ConvertAll(fileLine.Split(','), int.Parse));
+
+          foreach (var lineNumber in fileLineNumbers)
+          {
+            if (raffledNumbers.Contains(lineNumber))
+            {
+              matchCount++;
+            }
+          }
+
+          result.AppendFormat("{0}.rivi: {1} oikein\n", ++l, matchCount);
+        }
+      }      
+
+      return result.ToString();
     }
 
     private List<List<int>> getNumbersList()

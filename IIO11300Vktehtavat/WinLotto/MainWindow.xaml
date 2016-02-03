@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinLotto"
         mc:Ignorable="d"
-        Title="WinLotto" Height="370" Width="290" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="WinLotto" Height="400" Width="290" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,2,0">
         <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="260">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
@@ -21,16 +21,20 @@
                 <TextBox x:Name="txtDrawns" HorizontalAlignment="Stretch" Text="1" MinWidth="40"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Button x:Name="btnDraw" Content="Draw" Margin="0" Width="120" Click="btnDraw_Click"/>
-                <Button x:Name="btnClear" Content="Clear" Margin="10,0,0,0" Width="120" Click="btnClear_Click"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Button x:Name="btnDraw" Content="Draw" Margin="0,0,5,0" Width="120" Click="btnDraw_Click"/>
                 <Button x:Name="btnSaveNumbers" Content="Save numbers" Margin="0" Width="120" Click="btnSaveNumbers_Click" />
-                <Button x:Name="btnCheckNumbers" Content="Check numbers" Margin="10,0,0,0" Width="120" Click="btnCheckNumbers_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <TextBlock x:Name="textBlock3" MinWidth="70" Margin="10,0,20,0" Text="Raffled numbers:" />
                 <TextBox x:Name="txtRaffledNumbers" Margin="0,0,5,0" MinWidth="130" ToolTip="Syötä arvotut numerot ja mahdolliset lisänumerot perään pilkulla erotettuna toisistaan" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock x:Name="textBlock5" MinWidth="70" Margin="0,0,5,0" Text="File to check:" />
+                <TextBox x:Name="txtFileName" Width="120" />
+                <Button x:Name="btnBrowse" Content="Browse..." Margin="10,0,0,0" Click="btnBrowse_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Button x:Name="btnCheckNumbers" Content="Check file numbers" Margin="0,0,5,0" Width="250" Click="btnCheckNumbers_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <TextBlock x:Name="textBlock4" MinWidth="70" Margin="10,0,20,0" Text="Randomly drawn numbers:" />
@@ -38,7 +42,8 @@
             <StackPanel Orientation="Horizontal" Height="144" Margin="0,0,0,5">
                 <ListBox Name="lbxNumbers" Width="255" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,5">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Button x:Name="btnClear" Content="Clear" Margin="0,0,5,0" Width="120" Click="btnClear_Click"/>
                 <Button x:Name="btnClose" Content="Close" Margin="0,0,5,0" Width="120" Click="btnClose_Click"/>
             </StackPanel>
         </StackPanel>
