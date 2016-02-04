@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:H3MittausData"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="600" FontSize="18">
+        Title="MainWindow" Height="350" Width="1050" FontSize="18">
     <Grid>
         <TabControl x:Name="tabControl" 
                     HorizontalAlignment="Stretch" 
@@ -19,7 +19,14 @@
                             <TextBlock Text="Tiedostonimi:" Margin="10,0,0,0"/>
                             <TextBox x:Name="txtFileName" Text="d:\temp\testi.txt"/>
                             <Button x:Name="btnBrowse" Content="Browse..." Margin="10,0,0,0" Click="btnBrowse_Click" />
-                            <Button x:Name="btnSave" Content="Save" Margin="10,0,0,0" Click="btnSave_Click" />
+                            <Button x:Name="btnSave" Content="Tallenna" Margin="10,0,0,0" Click="btnSave_Click" />
+                            <Button x:Name="btnRead" Content="Hae tiedot" Margin="10,0,0,0" Click="btnRead_Click" />
+                            <TextBlock Text="XML" />
+                            <Button x:Name="btnSerialize" Content="Serialisoi" Margin="10,0,0,0" Click="btnSerialize_Click" />
+                            <Button x:Name="btnDeserialize" Content="Deserialisoi" Margin="10,0,0,0" Click="btnDeserialize_Click" />
+                            <TextBlock Text="Binääri" />
+                            <Button x:Name="btnSerializeBin" Content="Serialisoi" Margin="10,0,0,0" Click="btnSerializeBin_Click" />
+                            <Button x:Name="btnDeserializeBin" Content="Deserialisoi" Margin="10,0,0,0" Click="btnDeserializeBin_Click" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="klo:" />

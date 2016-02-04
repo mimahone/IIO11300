@@ -23,6 +23,9 @@ namespace H3MittausData
   /// </summary>
   public partial class MainWindow : Window
   {
+    // Luodaan lista mittaus-olioita varten
+    List<MittausData> mitatut;
+
     public MainWindow()
     {
       InitializeComponent();
@@ -32,6 +35,7 @@ namespace H3MittausData
     {
       //omat ikkunaan liittyvät alustukset
       txtToday.Text = DateTime.Today.ToShortDateString();
+      mitatut = new List<MittausData>();
     }
 
     private void viewSavedData(string path)
@@ -67,7 +71,8 @@ namespace H3MittausData
     {
       //luodaan uusi mittausdata olio ja näytetään se käyttäjälle
       MittausData md = new MittausData(txtClock.Text, txtData.Text);
-      lbData.Items.Add(md);
+      mitatut.Add(md);
+      ApplyChanges();
     }
 
     private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -92,20 +97,94 @@ namespace H3MittausData
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-      var sfd = new SaveFileDialog();
-
+      // Kirjoitetaan mitatut-tiedostoon
       try
       {
-        sfd.InitialDirectory = @"C:\temp\";
-        sfd.Filter = "Text files|*.txt|All files|*.*";
-        if (sfd.ShowDialog() == true)
-        {
-          File.WriteAllText(sfd.FileName, getSavingData());
-        }
+        MittausData.SaveToFile(txtFileName.Text, mitatut);
+        MessageBox.Show("Tiedot tallennettu onnistuneesti tiedostoon " + txtFileName.Text);
       }
       catch (Exception ex)
       {
         MessageBox.Show("Tiedostoon tallennus ei onnistunut: " + ex.Message);
+      }
+    }
+
+    private void btnRead_Click(object sender, RoutedEventArgs e)
+    {
+      // Haetaan käyttäjän antamasta tiedostosta mitatut arvot
+      try
+      {
+        mitatut = MittausData.ReadFromFile(txtFileName.Text);
+        ApplyChanges();
+        MessageBox.Show("Tiedot haettu onnistuneesti tiedostosta " + txtFileName.Text);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Tiedostosta haku ei onnistunut: " + ex.Message);
+      }
+    }
+
+    private void ApplyChanges()
+    {
+      lbData.ItemsSource = null;
+      lbData.ItemsSource = mitatut;
+    }
+
+    private void btnSerialize_Click(object sender, RoutedEventArgs e)
+    {
+      // Kutsutaan serialisointia
+      try
+      {
+        Serialisointi.SerialisoiXml(txtFileName.Text, mitatut);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
+      }
+    }
+
+    private void btnDeserialize_Click(object sender, RoutedEventArgs e)
+    {
+      // Kutsutaan deserialisointia
+      try
+      {
+        mitatut = Serialisointi.DeSerialisoiXml(txtFileName.Text);
+        ApplyChanges();
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
+      }
+    }
+
+    private void btnSerializeBin_Click(object sender, RoutedEventArgs e)
+    {
+      // Kutsutaan serialisointia binääri-muotoon
+      try
+      {
+        Serialisointi.Serialisoi(txtFileName.Text, mitatut);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
+      }
+    }
+
+    private void btnDeserializeBin_Click(object sender, RoutedEventArgs e)
+    {
+      // Kutsutaan deserialisointia binääri-muotoon, palauttaa viittauksen objektiin
+      object obj = new object();
+
+      try
+      {
+        Serialisointi.DeSerialisoi(txtFileName.Text, ref obj);
+        // Castataan obj MittausData-oliolistaksi
+        mitatut = (List<MittausData>)obj;
+        ApplyChanges();
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
       }
     }
   }
