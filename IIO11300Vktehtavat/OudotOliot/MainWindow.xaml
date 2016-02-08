@@ -1,0 +1,42 @@
+﻿<Window x:Class="OudotOliot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OudotOliot"
+        mc:Ignorable="d"
+        Title="Oudot oliot" Height="260" Width="510" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="tbFirstName" Text="Etunimi" Margin="5,7,5,0" />
+                <TextBlock x:Name="tbLastName" Text="Sukunimi" Margin="5,7,5,0" />
+                <TextBlock x:Name="tbPrice" Text="Siirtohinta" Margin="5,7,5,0" />
+                <TextBlock x:Name="tbTeam" Text="Seura" Margin="5,7,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBox x:Name="txtFirstName" Width="120" Margin="5,5,0,0" />
+                <TextBox x:Name="txtLastName" Width="120" Margin="5,5,0,0" />
+                <TextBox x:Name="txtPrice" Width="120" Margin="5,5,0,0" Text="0"/>
+                <ComboBox x:Name="cboTeam" Margin="5,5,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnCreatePlayer" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnCreatePlayer_Click"/>
+                <Button x:Name="btnSavePlayer" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSavePlayer_Click"/>
+                <Button x:Name="btnDeletePlayer" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDeletePlayer_Click"/>
+                <Button x:Name="btnWritePlayers" Content="Kirjoita pelaajat" Margin="5,5,5,0" Click="btnWritePlayers_Click"/>
+                <Button x:Name="btnExit" Content="Lopetus" Margin="5,5,5,0" Click="btnExit_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <ListBox x:Name="lstPlayers" Width="200" Height="190" SelectionChanged="lstPlayers_SelectionChanged" />
+            </StackPanel>
+        </StackPanel>
+        <DockPanel VerticalAlignment="Bottom">
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock Name="lblInfo" />
+                </StatusBarItem>
+            </StatusBar>
+        </DockPanel>
+    </Grid>
+</Window>
