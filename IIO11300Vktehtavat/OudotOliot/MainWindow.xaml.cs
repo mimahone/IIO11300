@@ -90,6 +90,7 @@ namespace OudotOliot
 
         playerList.Add(player);
         updatePlayerList();
+        lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
         lblInfo.Text = "Uusi pelaaja lisätty";
       }
       catch (Exception ex)
@@ -111,7 +112,17 @@ namespace OudotOliot
     private void btnSavePlayer_Click(object sender, RoutedEventArgs e)
     {
       // Muutetaan olemassa olevan olion tietoja ja kirjoitetaan tiedot listboxiin
-      var player = playerList.FirstOrDefault<Pelaaja>(p => p.EsitysNimi == lstPlayers.SelectedValue.ToString());
+      Pelaaja player = null;
+
+      if (lstPlayers.SelectedValue == null)
+      {
+        lblInfo.Text = "Tallennusta ei voitu suorittaa koska pelaajaa ei ole valittu listalta";
+        return;
+      }
+      else
+      {
+        player = playerList.FirstOrDefault<Pelaaja>(p => p.EsitysNimi == lstPlayers.SelectedValue.ToString());
+      }
 
       if (player != null)
       {
