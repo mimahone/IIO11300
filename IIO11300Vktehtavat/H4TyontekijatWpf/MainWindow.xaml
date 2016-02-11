@@ -1,0 +1,23 @@
+﻿<Window x:Class="H4TyontekijatWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H4TyontekijatWpf"
+        mc:Ignorable="d"
+        Title="Akun tehdas Palkanlaskenta" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel>
+            <Button x:Name="btnReadXML" Content="Hae työntekijätiedot" Click="btnReadXML_Click" />
+            <DataGrid x:Name="dgData" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Etunimi" Binding="{Binding Path=Element[etunimi].Value}" />
+                    <DataGridTextColumn Header="Sukunimi" Binding="{Binding Path=Element[sukunimi].Value}" />
+                    <DataGridTextColumn Header="Työsuhde" Binding="{Binding Path=Element[tyosuhde].Value}" />
+                    <DataGridTextColumn Header="kk-palkka €" Binding="{Binding Path=Element[palkka].Value}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock x:Name="tbMessage" Text="..." />
+        </StackPanel>
+    </Grid>
+</Window>

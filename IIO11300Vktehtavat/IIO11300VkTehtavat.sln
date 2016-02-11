@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3MittausData", "H3MittausD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OudotOliot", "OudotOliot\OudotOliot.csproj", "{7FA16C37-4BA9-4485-988C-F3F55CA52180}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H4TyontekijatConsole", "H4TyontekijaConsole\H4TyontekijatConsole.csproj", "{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H4TyontekijatWpf", "H4TyontekijatWpf\H4TyontekijatWpf.csproj", "{5DBE63EE-129D-4765-8A26-D53BBA8CDEBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{7FA16C37-4BA9-4485-988C-F3F55CA52180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FA16C37-4BA9-4485-988C-F3F55CA52180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FA16C37-4BA9-4485-988C-F3F55CA52180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DBE63EE-129D-4765-8A26-D53BBA8CDEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DBE63EE-129D-4765-8A26-D53BBA8CDEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DBE63EE-129D-4765-8A26-D53BBA8CDEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DBE63EE-129D-4765-8A26-D53BBA8CDEBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
