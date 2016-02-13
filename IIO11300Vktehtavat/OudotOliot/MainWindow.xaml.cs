@@ -1,9 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,7 +17,7 @@ namespace OudotOliot
       IniMyStuff();
     }
 
-    private List<Pelaaja> playerList = new List<Pelaaja>();
+    private Pelaajat players = new Pelaajat();
 
     private void IniMyStuff()
     {
@@ -36,18 +33,6 @@ namespace OudotOliot
 
       cboTeam.SelectedIndex = 0;
       txtFirstName.Focus();
-    }
-
-    private string getSavingData()
-    {
-      var sb = new StringBuilder();
-
-      foreach (var player in playerList)
-      {
-        sb.AppendLine(string.Format("{0},{1},{2},{3}", player.Etunimi, player.Sukunimi, player.Siirtohinta, player.Seura));
-      }
-
-      return sb.ToString();
     }
 
     private void btnCreatePlayer_Click(object sender, RoutedEventArgs e)
@@ -78,20 +63,19 @@ namespace OudotOliot
           throw new Exception("siirtosumma ei voi olla negatiivinen!");
         }
 
-        var player = new Pelaaja(txtFirstName.Text, txtLastName.Text, price, cboTeam.Text);
+        Pelaaja player = new Pelaaja(txtFirstName.Text, txtLastName.Text, price, cboTeam.Text);
 
-        // Tarkistus ettei ole toista saman nimistä pelaajaa
-        int i = playerList.Count(p => p.KokoNimi == player.KokoNimi);
-
-        if (i > 0)
+        if (players.CreatePlayer(player) != null)
         {
-          throw new Exception(string.Format("saman niminen pelaaja ({0}) on jo listalla!", player.KokoNimi));
-        }
+          refreshPlayerList();
 
-        playerList.Add(player);
-        updatePlayerList();
-        lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
-        lblInfo.Text = "Uusi pelaaja lisätty";
+          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
+          lblInfo.Text = "Uusi pelaaja lisätty";
+        }
+        else
+        {
+          lblInfo.Text = "Uuden pelaajan lisäys epäonnistui!";
+        }
       }
       catch (Exception ex)
       {
@@ -99,11 +83,11 @@ namespace OudotOliot
       }
     }
 
-    private void updatePlayerList()
+    private void refreshPlayerList()
     {
       lstPlayers.Items.Clear();
 
-      foreach (var player in playerList)
+      foreach (Pelaaja player in players.GetPlayers())
       {
         lstPlayers.Items.Add(player.EsitysNimi);
       }
@@ -121,7 +105,7 @@ namespace OudotOliot
       }
       else
       {
-        player = playerList.FirstOrDefault<Pelaaja>(p => p.EsitysNimi == lstPlayers.SelectedValue.ToString());
+        player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
       }
 
       if (player != null)
@@ -152,18 +136,17 @@ namespace OudotOliot
           player.Siirtohinta = price;
           player.Seura = cboTeam.Text;
 
-          // Tarkistus ettei ole toista saman nimistä pelaajaa
-          int i = playerList.Count(p => p.KokoNimi == player.KokoNimi);
-
-          if (i > 1)
+          if (players.UpdatePlayer(player) != null)
           {
-            throw new Exception(string.Format("saman niminen pelaaja ({0}) on jo listalla!", player.KokoNimi));
+            refreshPlayerList();
+
+            lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
+            lblInfo.Text = "Pelaajan tiedot on päivitetty";
           }
-
-          updatePlayerList();
-
-          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
-          lblInfo.Text = "Pelaajan tiedot on päivitetty";
+          else
+          {
+            lblInfo.Text = "Pelaajan tietojen päivitys epäonnistui!";
+          }
         }
         catch (Exception ex)
         {
@@ -175,19 +158,23 @@ namespace OudotOliot
     private void btnDeletePlayer_Click(object sender, RoutedEventArgs e)
     {
       // Poistetaan oliokokoelmasta sekä listboxista valittu pelaaja
-      var player = playerList.FirstOrDefault<Pelaaja>(p => p.EsitysNimi == lstPlayers.SelectedValue.ToString());
+      Pelaaja player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
 
       if (player != null)
       {
-        playerList.Remove(player);
-
-        lstPlayers.Items.Remove(player.EsitysNimi);
-
-        txtFirstName.Text = "";
-        txtLastName.Text = "";
-        txtPrice.Text = "0";
-        cboTeam.SelectedIndex = 0;
-        lblInfo.Text = "Pelaajan tiedot on poistettu";
+        if (players.DeletePlayer(player))
+        {
+          lstPlayers.Items.Remove(player.EsitysNimi);
+          txtFirstName.Text = "";
+          txtLastName.Text = "";
+          txtPrice.Text = "0";
+          cboTeam.SelectedIndex = 0;
+          lblInfo.Text = "Pelaajan tiedot on poistettu"; 
+        }
+        else
+        {
+          lblInfo.Text = "Pelaajan tietojen poisto epäonnistui!";
+        }
       }
       else
       {
@@ -198,9 +185,11 @@ namespace OudotOliot
     private void btnWritePlayers_Click(object sender, RoutedEventArgs e)
     {
       // Kirjoitetaan listassa olevien kaikkien olioitten tiedot käyttäjän Save-dialogissa valitsemaan tiedostoon
-      if (playerList == null || playerList.Count == 0)
+      string playersData = players.GetPlayerData();
+
+      if (string.IsNullOrEmpty(playersData))
       {
-        lblInfo.Text = "Tallennusta ei voi tehdä koska listalla ei ole pelaajia";
+        lblInfo.Text = "Tallennusta ei voi suorittaa koska listalla ei ole pelaajia";
         return;
       }
 
@@ -214,7 +203,7 @@ namespace OudotOliot
 
         if (sfd.ShowDialog() == true)
         {
-          File.WriteAllText(sfd.FileName, getSavingData());
+          File.WriteAllText(sfd.FileName, playersData);
           lblInfo.Text = "Tiedostoon tallennus on suoritettu";
         }
       }
@@ -234,7 +223,7 @@ namespace OudotOliot
       // Jos pelaajan nimeä napsautetaan listboxissa, niin pelaajan kaikki tiedot kirjoitetaan vasemmalla oleviin tekstikenttiin tietojen muokkausta varten
       if (lstPlayers.SelectedValue == null) return;
 
-      var player = playerList.FirstOrDefault<Pelaaja>(p => p.EsitysNimi == lstPlayers.SelectedValue.ToString());
+      Pelaaja player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
 
       if (player != null)
       {

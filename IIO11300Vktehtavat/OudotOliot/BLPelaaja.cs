@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+* Copyright (C) JAMK/IT/Esa Salmikangas
+* This file is part of the IIO11300 course project.
+* Created: 8.2.2016 Modified: 13.2.2016
+* Authors: Mika Mähönen (K6058), Esa Salmikangas
+*/
 
 namespace OudotOliot
 {
