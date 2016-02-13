@@ -21,8 +21,8 @@ namespace OudotOliot
 
     private void IniMyStuff()
     {
-      // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla
-      string[] teams = { "Blues", "HIFK", "HPK", "Ilves", "JYP", "Kalpa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "Saipa", "Sport", "Tappara", "TPS", "Ässät" };
+      // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla (+ Jokerit koska esiintyy tietokannassa)
+      string[] teams = { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
 
       cboTeam.Items.Clear();
 
@@ -30,6 +30,8 @@ namespace OudotOliot
       {
         cboTeam.Items.Add(team);
       }
+
+      refreshPlayerList();
 
       cboTeam.SelectedIndex = 0;
       txtFirstName.Focus();
@@ -227,6 +229,7 @@ namespace OudotOliot
 
       if (player != null)
       {
+        txtId.Text = player.Id.ToString();
         txtFirstName.Text = player.Etunimi;
         txtLastName.Text = player.Sukunimi;
         txtPrice.Text = player.Siirtohinta.ToString();

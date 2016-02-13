@@ -9,12 +9,14 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="tbId" Text="ID" Margin="5,7,5,0" IsEnabled="False" />
                 <TextBlock x:Name="tbFirstName" Text="Etunimi" Margin="5,7,5,0" />
                 <TextBlock x:Name="tbLastName" Text="Sukunimi" Margin="5,7,5,0" />
                 <TextBlock x:Name="tbPrice" Text="Siirtohinta" Margin="5,7,5,0" />
                 <TextBlock x:Name="tbTeam" Text="Seura" Margin="5,7,0,0" />
             </StackPanel>
             <StackPanel Orientation="Vertical">
+                <TextBox x:Name="txtId" Margin="5,5,0,0" IsEnabled="False" />
                 <TextBox x:Name="txtFirstName" Width="120" Margin="5,5,0,0" />
                 <TextBox x:Name="txtLastName" Width="120" Margin="5,5,0,0" />
                 <TextBox x:Name="txtPrice" Width="120" Margin="5,5,0,0" Text="0"/>

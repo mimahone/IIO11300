@@ -19,6 +19,8 @@ namespace OudotOliot
       Seura = team;
     }
 
+    public int Id { get; set; }
+
     public string Etunimi { get; set; }
 
     public string Sukunimi { get; set; }
