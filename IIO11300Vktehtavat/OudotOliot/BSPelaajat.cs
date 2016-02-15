@@ -1,7 +1,7 @@
 ﻿/*
 * Copyright (C) JAMK/IT/Esa Salmikangas
 * This file is part of the IIO11300 course project.
-* Created: 13.2.2016 Modified: 13.2.2016
+* Created: 13.2.2016 Modified: 15.2.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 
@@ -16,22 +16,34 @@ namespace OudotOliot
 {
   public class Pelaajat
   {
-    OleDbConnection connection; //= new OleDbConnection(connectionString)
+    private OleDbConnection connection;
     private List<Pelaaja> playerList = new List<Pelaaja>();
+    private List<Pelaaja> deletedPlayers = new List<Pelaaja>();
 
     /// <summary>
     /// Constructor
     /// </summary>
     public Pelaajat()
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["SMLiiga"].ConnectionString;
-      connection = new OleDbConnection(connectionString);
+      connectDataBase();
+    }
+
+    private void connectDataBase()
+    {
+      try
+      {
+        connection = new OleDbConnection(ConfigurationManager.ConnectionStrings["SMLiiga"].ConnectionString);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
 
     /// <summary>
     /// Get list of players
     /// </summary>
-    /// <returns></returns>
+    /// <returns>List of players</returns>
     public List<Pelaaja> GetPlayers()
     {
       const string sql = @"
@@ -75,7 +87,10 @@ ORDER BY sukunimi, etunimi
       }
       finally
       {
-        connection.Close();
+        if (connection.State == ConnectionState.Open)
+        {
+          connection.Close();
+        }
       }
 
       return playerList;
@@ -101,27 +116,7 @@ ORDER BY sukunimi, etunimi
           throw new Exception(string.Format("saman niminen pelaaja ({0}) on jo listalla!", player.KokoNimi));
         }
 
-//        const string sql = @"
-//INSERT INTO Pelaajat (etunimi, sukunimi, arvo, seura)
-//VALUES (@firstName, @lastName, @price, @team)
-//";
-
-//        if (connection.State == ConnectionState.Closed)
-//        {
-//          connection.Open();
-//        }
-
-//        using (OleDbCommand command = new OleDbCommand(sql, connection))
-//        {
-//          // add named parameters
-//          command.Parameters.AddWithValue("@firstName", player.Etunimi);
-//          command.Parameters.AddWithValue("@lastName", player.Sukunimi);
-//          command.Parameters.AddWithValue("@price", player.Siirtohinta);
-//          command.Parameters.AddWithValue("@team", player.Seura);
-
-//          command.ExecuteNonQuery();
-//        }
-
+        player.Status = Status.Created;
         playerList.Add(player);
 
         return playerList.Find(p => p.KokoNimi == player.KokoNimi);
@@ -130,21 +125,13 @@ ORDER BY sukunimi, etunimi
       {
         throw ex;
       }
-      //finally
-      //{
-      //  connection.Close();
-      //}
     }
 
     public Pelaaja UpdatePlayer(Pelaaja player)
     {
-      // Tarkistus ettei ole toista saman nimistä pelaajaa
       try
       {
-        //if (GetPlayerByFullName(player.KokoNimi) != null)
-        //{
-        //  throw new Exception(string.Format("saman niminen pelaaja ({0}) on jo listalla!", player.KokoNimi));
-        //}
+        player.Status = Status.Modified;
 
         return playerList.Find(p => p.KokoNimi == player.KokoNimi);
       }
@@ -162,6 +149,8 @@ ORDER BY sukunimi, etunimi
 
         if (player != null)
         {
+          player.Status = Status.Deleted;
+          deletedPlayers.Add(player);
           playerList.Remove(player);
           return true;
         }
@@ -191,6 +180,110 @@ ORDER BY sukunimi, etunimi
         }
 
         return sb.ToString();
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+    public void SaveChangesToDatabase()
+    {
+      try
+      {
+        if (connection.State == ConnectionState.Closed)
+        {
+          connection.Open();
+        }
+
+        // Remove deleted players from database
+        if (deletedPlayers.Count > 0)
+        {
+          OleDbCommand command = new OleDbCommand("DELETE FROM Pelaajat WHERE id = @id", connection);
+
+          foreach (Pelaaja player in deletedPlayers)
+          {
+            command.Parameters.AddWithValue("@id", player.Id);
+
+            if (command.ExecuteNonQuery() > 0)
+            {
+              player.Status = Status.Unchanged;
+            }
+          }
+        }
+
+        // Save created players
+        List<Pelaaja> createdPlayers = playerList.FindAll(p => p.Status == Status.Created);
+
+        if (createdPlayers.Count > 0)
+        {
+          OleDbCommand command = new OleDbCommand(
+              "INSERT INTO Pelaajat (id, etunimi, sukunimi, arvo, seura) VALUES (?, ?, ?, ?, ?)",
+              connection
+            );
+
+          foreach (Pelaaja player in createdPlayers)
+          {
+            // add named parameters
+            command.Parameters.AddWithValue("@id", getNextId());
+            command.Parameters.AddWithValue("@firstName", player.Etunimi);
+            command.Parameters.AddWithValue("@lastName", player.Sukunimi);
+            command.Parameters.AddWithValue("@price", player.Siirtohinta);
+            command.Parameters.AddWithValue("@team", player.Seura);
+
+            if (command.ExecuteNonQuery() > 0)
+            { 
+              player.Status = Status.Unchanged;
+            }
+          }
+        }
+        
+        // Save modified players
+        List<Pelaaja> modifiedPlayers = playerList.FindAll(p => p.Status == Status.Modified);
+
+        if (modifiedPlayers.Count > 0)
+        {
+          OleDbCommand command = new OleDbCommand(
+              "UPDATE Pelaajat SET etunimi=?, sukunimi=?, arvo=?, seura=? WHERE id=?",
+              connection
+            );
+
+          foreach (Pelaaja player in modifiedPlayers)
+          {
+            command.Parameters.AddWithValue("@firstName", player.Etunimi);
+            command.Parameters.AddWithValue("@lastName", player.Sukunimi);
+            command.Parameters.AddWithValue("@price", player.Siirtohinta);
+            command.Parameters.AddWithValue("@team", player.Seura);
+            command.Parameters.AddWithValue("@id", player.Id);
+
+            if (command.ExecuteNonQuery() > 0)
+            {
+              player.Status = Status.Unchanged;
+            }
+          }
+        }
+
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+      finally
+      {
+        if (connection.State == ConnectionState.Open)
+        {
+          connection.Close();
+        }
+      }
+    }
+
+    private int getNextId()
+    {
+      try
+      {
+        OleDbCommand command = new OleDbCommand("SELECT MAX(id) + 1 FROM Pelaajat", connection);
+        int id = (int)command.ExecuteScalar();
+        return id;
       }
       catch (Exception ex)
       {

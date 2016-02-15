@@ -167,6 +167,7 @@ namespace OudotOliot
         if (players.DeletePlayer(player))
         {
           lstPlayers.Items.Remove(player.EsitysNimi);
+          txtId.Text = "";
           txtFirstName.Text = "";
           txtLastName.Text = "";
           txtPrice.Text = "0";
@@ -215,6 +216,20 @@ namespace OudotOliot
       }
     }
 
+    private void btnSaveToDatabase_Click(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        players.SaveChangesToDatabase();
+        refreshPlayerList();
+        lblInfo.Text = "Tietokantaan tallennus suoritettu";
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "Tietokantaan tallennus ei onnistunut: " + ex.Message;
+      }
+    }
+
     private void btnExit_Click(object sender, RoutedEventArgs e)
     {
       Application.Current.Shutdown();
@@ -237,6 +252,6 @@ namespace OudotOliot
         lblInfo.Text = "Valittu pelaaja " + player.EsitysNimi;
       }
     }
- 
+
   }
 }

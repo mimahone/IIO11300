@@ -27,6 +27,7 @@
                 <Button x:Name="btnSavePlayer" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSavePlayer_Click"/>
                 <Button x:Name="btnDeletePlayer" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDeletePlayer_Click"/>
                 <Button x:Name="btnWritePlayers" Content="Kirjoita pelaajat" Margin="5,5,5,0" Click="btnWritePlayers_Click"/>
+                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,5,5,0" Click="btnSaveToDatabase_Click"/>
                 <Button x:Name="btnExit" Content="Lopetus" Margin="5,5,5,0" Click="btnExit_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">

@@ -7,6 +7,14 @@
 
 namespace OudotOliot
 {
+  public enum Status
+  {
+    Unchanged = 0,
+    Created = 1,
+    Modified = 2,
+    Deleted = 3
+  }
+
   public class Pelaaja
   {
     public Pelaaja() { }
@@ -32,5 +40,8 @@ namespace OudotOliot
     public string Seura { get; set; }
 
     public int Siirtohinta { get; set; }
+
+    public Status Status { get; set; }
+
   }
 }
