@@ -269,7 +269,7 @@ ORDER BY seura, sukunimi, etunimi
 
           foreach (Pelaaja player in createdPlayers)
           {
-            // add named parameters
+            command.Parameters.Clear();
             command.Parameters.AddWithValue("@id", getNextId());
             command.Parameters.AddWithValue("@firstName", player.Etunimi);
             command.Parameters.AddWithValue("@lastName", player.Sukunimi);
@@ -295,6 +295,7 @@ ORDER BY seura, sukunimi, etunimi
 
           foreach (Pelaaja player in modifiedPlayers)
           {
+            command.Parameters.Clear();
             command.Parameters.AddWithValue("@firstName", player.Etunimi);
             command.Parameters.AddWithValue("@lastName", player.Sukunimi);
             command.Parameters.AddWithValue("@price", player.Siirtohinta);
