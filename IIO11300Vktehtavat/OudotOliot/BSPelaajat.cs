@@ -1,7 +1,7 @@
 ﻿/*
 * Copyright (C) JAMK/IT/Esa Salmikangas
 * This file is part of the IIO11300 course project.
-* Created: 13.2.2016 Modified: 15.2.2016
+* Created: 13.2.2016 Modified: 17.2.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 
@@ -18,17 +18,19 @@ namespace OudotOliot
   {
     private OleDbConnection connection;
     private List<Pelaaja> playerList = new List<Pelaaja>();
-    private List<Pelaaja> deletedPlayers = new List<Pelaaja>();
 
     /// <summary>
     /// Constructor
     /// </summary>
     public Pelaajat()
     {
-      connectDataBase();
+      connectDatabase();
     }
 
-    private void connectDataBase()
+    /// <summary>
+    /// Database connection creating
+    /// </summary>
+    private void connectDatabase()
     {
       try
       {
@@ -49,11 +51,13 @@ namespace OudotOliot
       const string sql = @"
 SELECT id, etunimi, sukunimi, arvo, seura
 FROM Pelaajat
-ORDER BY sukunimi, etunimi
+ORDER BY seura, sukunimi, etunimi
 ";
 
       try
       {
+        playerList.RemoveAll(p => p.Status == Status.Unchanged);
+
         if (connection.State == ConnectionState.Closed)
         {
           connection.Open();
@@ -64,22 +68,27 @@ ORDER BY sukunimi, etunimi
           using (OleDbDataReader reader = command.ExecuteReader())
           {
             Pelaaja player;
+            int id = 0;
 
             while (reader.Read())
             {
-              player = new Pelaaja(
-                  reader.GetString(1),
-                  reader.GetString(2),
-                  int.Parse(reader.GetValue(3).ToString()),
-                  reader.GetString(4)
-              );
-              player.Id = int.Parse(reader.GetValue(0).ToString());
+              id = int.Parse(reader.GetValue(0).ToString());
 
-              playerList.Add(player);
+              if ((playerList.Find(p => p.Id == id)) == null)
+              {
+                player = new Pelaaja(
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    int.Parse(reader.GetValue(3).ToString()),
+                    reader.GetString(4)
+                );
+                player.Id = id;
+
+                playerList.Add(player);
+              }
             }
           }
         }
-        
       }
       catch (Exception ex)
       {
@@ -96,16 +105,31 @@ ORDER BY sukunimi, etunimi
       return playerList;
     }
 
+    /// <summary>
+    /// Get player by full name
+    /// </summary>
+    /// <param name="fullName">Full name search criteria</param>
+    /// <returns>Matching player</returns>
     public Pelaaja GetPlayerByFullName(string fullName)
     {
       return playerList.Find(p => p.KokoNimi == fullName);
     }
 
+    /// <summary>
+    /// Get player by display name
+    /// </summary>
+    /// <param name="displayName">Display name search criteria</param>
+    /// <returns>Matching player</returns>
     public Pelaaja GetPlayerByDisplayName(string displayName)
     {
       return playerList.Find(p => p.EsitysNimi == displayName);
     }
 
+    /// <summary>
+    /// Created new player to the players list
+    /// </summary>
+    /// <param name="player">Player to create</param>
+    /// <returns>Created player</returns>
     public Pelaaja CreatePlayer(Pelaaja player)
     {
       // Tarkistus ettei ole toista saman nimistä pelaajaa
@@ -127,11 +151,19 @@ ORDER BY sukunimi, etunimi
       }
     }
 
+    /// <summary>
+    /// Updates existing player's data of players list
+    /// </summary>
+    /// <param name="player">Player to update</param>
+    /// <returns>Updated player</returns>
     public Pelaaja UpdatePlayer(Pelaaja player)
     {
       try
       {
-        player.Status = Status.Modified;
+        if (player.Status != Status.Created)
+        {
+          player.Status = Status.Modified; 
+        }
 
         return playerList.Find(p => p.KokoNimi == player.KokoNimi);
       }
@@ -141,6 +173,11 @@ ORDER BY sukunimi, etunimi
       }
     }
 
+    /// <summary>
+    /// Deletes existing player of players list
+    /// </summary>
+    /// <param name="player">Player to delete</param>
+    /// <returns>True if deleted else false</returns>
     public bool DeletePlayer(Pelaaja player)
     {
       try
@@ -150,8 +187,6 @@ ORDER BY sukunimi, etunimi
         if (player != null)
         {
           player.Status = Status.Deleted;
-          deletedPlayers.Add(player);
-          playerList.Remove(player);
           return true;
         }
 
@@ -163,6 +198,10 @@ ORDER BY sukunimi, etunimi
       }
     }
 
+    /// <summary>
+    /// Get data of players (for saving to file)
+    /// </summary>
+    /// <returns>Data of players as string</returns>
     public string GetPlayerData()
     {
       try
@@ -187,6 +226,9 @@ ORDER BY sukunimi, etunimi
       }
     }
 
+    /// <summary>
+    /// Saves changes to database
+    /// </summary>
     public void SaveChangesToDatabase()
     {
       try
@@ -197,12 +239,15 @@ ORDER BY sukunimi, etunimi
         }
 
         // Remove deleted players from database
+        List<Pelaaja> deletedPlayers = playerList.FindAll(p => p.Status == Status.Deleted);
+
         if (deletedPlayers.Count > 0)
         {
           OleDbCommand command = new OleDbCommand("DELETE FROM Pelaajat WHERE id = @id", connection);
 
           foreach (Pelaaja player in deletedPlayers)
           {
+            command.Parameters.Clear();
             command.Parameters.AddWithValue("@id", player.Id);
 
             if (command.ExecuteNonQuery() > 0)
@@ -277,6 +322,10 @@ ORDER BY sukunimi, etunimi
       }
     }
 
+    /// <summary>
+    /// Get next id for new record helper method
+    /// </summary>
+    /// <returns>Id as int</returns>
     private int getNextId()
     {
       try

@@ -91,7 +91,10 @@ namespace OudotOliot
 
       foreach (Pelaaja player in players.GetPlayers())
       {
-        lstPlayers.Items.Add(player.EsitysNimi);
+        if (player.Status != Status.Deleted)
+        {
+          lstPlayers.Items.Add(player.EsitysNimi); 
+        }
       }
     }
 
