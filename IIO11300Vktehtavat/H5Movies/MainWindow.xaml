@@ -1,0 +1,17 @@
+﻿<Window x:Class="H5Movies.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H5Movies"
+        mc:Ignorable="d"
+        Title="Valikko" Height="250" Width="525" FontFamily="Showcard Gothic" FontSize="18.667" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center">Mikan elokuvagalleriat</TextBlock>
+            <Button x:Name="btnOpenMovies1" Content="Simppeli elokuvagalleria1" Click="btnOpenMovies1_Click" />
+            <Button x:Name="btnOpenMovies2" Content="Elokuvagalleria2 muokkaus" Click="btnOpenMovies2_Click" />
+            <Button x:Name="btnClose" Content="Sulje" Click="btnClose_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

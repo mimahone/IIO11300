@@ -1,0 +1,46 @@
+﻿<Window x:Class="H5Movies.Movies2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H5Movies"
+        mc:Ignorable="d"
+        Title="Mikan Elokuvagalleria V2" Height="300" Width="600" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!-- Malli tiedon esittämistä varten -->
+        <DataTemplate x:Key="MovieName">
+            <Label Content="{Binding XPath=@Name}" Width="200" Background="Blue" FontSize="18" />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.DataContext>
+            <XmlDataProvider x:Name="xdpMovies" Source="D:\\Movies.xml" XPath="/Movies/Movie" />
+        </Grid.DataContext>
+        <StackPanel Orientation="Horizontal">
+            <!-- Vasemman puoleinen pitää sisällään listan elokuvien nimistä -->
+            <StackPanel>
+                <ListBox 
+                    x:Name="lbxMovies"
+                    Height="350"
+                    ItemsSource="{Binding}"
+                    ItemTemplate="{StaticResource MovieName}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectionMode="Single"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
+            <!-- Oikean puoleisessa käyttäjä voi muokata elokuvan tietoja -->
+            <StackPanel>
+                <TextBlock>Elokuva</TextBlock>
+                <TextBox x:Name="txtName" Text="{Binding XPath=@Name}" FontSize="18"></TextBox>
+                <TextBlock>Ohjaaja</TextBlock>
+                <TextBox x:Name="txtDirector" Text="{Binding XPath=@Director}" FontSize="18"></TextBox>
+                <TextBlock>Maa</TextBlock>
+                <TextBox x:Name="txtCountry" Text="{Binding XPath=@Country}" FontSize="18"></TextBox>
+                <CheckBox x:Name="chkChecked" IsChecked="{Binding XPath=@Checked}">Katsottu</CheckBox>
+                <Button x:Name="btnCreate" Content="Lisää uusi" FontSize="16" Click="btnCreate_Click" />
+                <Button x:Name="btnDelete" Content="Poista" FontSize="16" Click="btnDelete_Click" />
+                <Button x:Name="btnSave" Content="Tallenna muutokset" FontSize="16" Click="btnSave_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

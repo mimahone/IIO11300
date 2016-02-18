@@ -5,6 +5,8 @@
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 
+using System;
+
 namespace OudotOliot
 {
   public enum Status
@@ -15,6 +17,7 @@ namespace OudotOliot
     Deleted = 3
   }
 
+  [Serializable()]
   public class Pelaaja
   {
     public Pelaaja() { }
