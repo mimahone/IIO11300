@@ -1,10 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace OudotOliot
+namespace JAMK.IT.IIO11300
 {
   /// <summary>
   /// Interaction logic for MainWindow.xaml
@@ -85,6 +86,16 @@ namespace OudotOliot
       }
     }
 
+    private void refreshPlayerList(List<Pelaaja> playerList)
+    {
+      lstPlayers.Items.Clear();
+
+      foreach (Pelaaja player in playerList)
+      {
+        lstPlayers.Items.Add(player.EsitysNimi);
+      }
+    }
+
     private void refreshPlayerList()
     {
       lstPlayers.Items.Clear();
@@ -93,7 +104,7 @@ namespace OudotOliot
       {
         if (player.Status != Status.Deleted)
         {
-          lstPlayers.Items.Add(player.EsitysNimi); 
+          lstPlayers.Items.Add(player.EsitysNimi);
         }
       }
     }
@@ -188,12 +199,10 @@ namespace OudotOliot
       }
     }
 
-    private void btnWritePlayers_Click(object sender, RoutedEventArgs e)
+    private void btnWritePlayersTxt_Click(object sender, RoutedEventArgs e)
     {
       // Kirjoitetaan listassa olevien kaikkien olioitten tiedot käyttäjän Save-dialogissa valitsemaan tiedostoon
-      string playersData = players.GetPlayerData();
-
-      if (string.IsNullOrEmpty(playersData))
+      if (lstPlayers.Items.Count == 0)
       {
         lblInfo.Text = "Tallennusta ei voi suorittaa koska listalla ei ole pelaajia";
         return;
@@ -209,13 +218,136 @@ namespace OudotOliot
 
         if (sfd.ShowDialog() == true)
         {
-          File.WriteAllText(sfd.FileName, playersData);
-          lblInfo.Text = "Tiedostoon tallennus on suoritettu";
+          File.WriteAllText(sfd.FileName, players.GetPlayerData());
+          lblInfo.Text = string.Format("{0}-tiedostoon tallennus on suoritettu", sfd.FileName);
         }
       }
       catch (Exception ex)
       {
-        lblInfo.Text = "Tiedostoon tallennus ei onnistunut: " + ex.Message;
+        lblInfo.Text = "Tekstitiedostoon tallennus ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void btnReadPlayersTxt_Click(object sender, RoutedEventArgs e)
+    {
+      var ofd = new OpenFileDialog();
+
+      try
+      {
+        ofd.InitialDirectory = @"C:\temp\";
+        ofd.Filter = "Text-files (*.txt)|*.txt|All files|*.*";
+
+        if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
+        {
+          refreshPlayerList(players.GetPlayersFromTxtFile(ofd.FileName));
+          lblInfo.Text = string.Format("{0}-tiedoston luenta suoritettu", ofd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "Tekstitiedostosta luenta ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void btnWritePlayersBin_Click(object sender, RoutedEventArgs e)
+    {
+      // Kirjoitetaan listassa olevien kaikkien olioitten tiedot käyttäjän Save-dialogissa valitsemaan bin-tiedostoon
+      if (lstPlayers.Items.Count == 0)
+      {
+        lblInfo.Text = "Tallennusta ei voi suorittaa koska listalla ei ole pelaajia";
+        return;
+      }
+
+      var sfd = new SaveFileDialog();
+
+      try
+      {
+        sfd.InitialDirectory = @"C:\temp\";
+        sfd.FileName = "Pelaajalista.bin";
+        sfd.Filter = "bin files|*.bin|All files|*.*";
+
+        if (sfd.ShowDialog() == true)
+        {
+          Pelaajat.SerializePlayersToBinFile(sfd.FileName, players.GetPlayers());
+          lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "bin-tiedostoon serialisointi ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void btnReadPlayersBin_Click(object sender, RoutedEventArgs e)
+    {
+      var ofd = new OpenFileDialog();
+
+      try
+      {
+        ofd.InitialDirectory = @"C:\temp\";
+        ofd.Filter = "bin-files (*.bin)|*.bin|All files|*.*";
+
+        if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
+        {
+          object obj = new object();
+          Pelaajat.DeserializePlayersFromBinFile(ofd.FileName, ref obj);
+          refreshPlayerList((List<Pelaaja>)obj);
+          lblInfo.Text = string.Format("{0}-tiedoston deserialisointi suoritettu", ofd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "bin-tiedostosta deserialisointi ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void btnWritePlayersXml_Click(object sender, RoutedEventArgs e)
+    {
+      // Kirjoitetaan listassa olevien kaikkien olioitten tiedot käyttäjän Save-dialogissa valitsemaan xml-tiedostoon
+      if (lstPlayers.Items.Count == 0)
+      {
+        lblInfo.Text = "Tallennusta ei voi suorittaa koska listalla ei ole pelaajia";
+        return;
+      }
+
+      var sfd = new SaveFileDialog();
+
+      try
+      {
+        sfd.InitialDirectory = @"C:\temp\";
+        sfd.FileName = "Pelaajalista.xml";
+        sfd.Filter = "xml files|*.xml|All files|*.*";
+
+        if (sfd.ShowDialog() == true)
+        {
+          Pelaajat.SerializePlayersToXmlFile(sfd.FileName, players.GetPlayers());
+          lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "xml-tiedostoon serialisointi ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void btnReadPlayersXml_Click(object sender, RoutedEventArgs e)
+    {
+      var ofd = new OpenFileDialog();
+
+      try
+      {
+        ofd.InitialDirectory = @"C:\temp\";
+        ofd.Filter = "xml-files (*.xml)|*.xml|All files|*.*";
+
+        if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
+        {
+          refreshPlayerList(Pelaajat.DeserializePlayersFromXmlFile(ofd.FileName));
+          lblInfo.Text = string.Format("{0}-tiedoston deserialisointi suoritettu", ofd.FileName);
+        }
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "xml-tiedostosta deserialisointi ei onnistunut: " + ex.Message;
       }
     }
 

@@ -1,13 +1,14 @@
 ﻿/*
 * Copyright (C) JAMK/IT/Esa Salmikangas
 * This file is part of the IIO11300 course project.
-* Created: 8.2.2016 Modified: 13.2.2016
+* Created: 8.2.2016 Modified: 20.2.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 
 using System;
+using System.Xml.Serialization;
 
-namespace OudotOliot
+namespace JAMK.IT.IIO11300
 {
   public enum Status
   {
@@ -17,7 +18,7 @@ namespace OudotOliot
     Deleted = 3
   }
 
-  [Serializable()]
+  [Serializable]
   public class Pelaaja
   {
     public Pelaaja() { }
@@ -44,7 +45,7 @@ namespace OudotOliot
 
     public int Siirtohinta { get; set; }
 
+    [XmlIgnore]
     public Status Status { get; set; }
-
   }
 }

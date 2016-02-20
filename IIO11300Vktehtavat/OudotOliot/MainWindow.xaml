@@ -1,11 +1,11 @@
-﻿<Window x:Class="OudotOliot.MainWindow"
+﻿<Window x:Class="JAMK.IT.IIO11300.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OudotOliot"
+        xmlns:local="clr-namespace:JAMK.IT.IIO11300"
         mc:Ignorable="d"
-        Title="Oudot oliot" Height="260" Width="510" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Oudot oliot" Height="340" Width="530" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
@@ -26,8 +26,13 @@
                 <Button x:Name="btnCreatePlayer" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnCreatePlayer_Click"/>
                 <Button x:Name="btnSavePlayer" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSavePlayer_Click"/>
                 <Button x:Name="btnDeletePlayer" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDeletePlayer_Click"/>
-                <Button x:Name="btnWritePlayers" Content="Kirjoita pelaajat" Margin="5,5,5,0" Click="btnWritePlayers_Click"/>
-                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,5,5,0" Click="btnSaveToDatabase_Click"/>
+                <Button x:Name="btnWritePlayersTxt" Content="Kirjoita pelaajat (txt)" Margin="5,5,5,0" Click="btnWritePlayersTxt_Click"/>
+                <Button x:Name="btnReadPlayersTxt" Content="Lue pelaajat (txt)" Margin="5,5,5,0" Click="btnReadPlayersTxt_Click"/>
+                <Button x:Name="btnWritePlayersBin" Content="Kirjoita pelaajat (bin)" Margin="5,5,5,0" Click="btnWritePlayersBin_Click" />
+                <Button x:Name="btnReadPlayersBin" Content="Lue pelaajat (bin)" Margin="5,5,5,0" Click="btnReadPlayersBin_Click" />
+                <Button x:Name="btnWritePlayersXml" Content="Kirjoita pelaajat (xml)" Margin="5,5,5,0" Click="btnWritePlayersXml_Click" />
+                <Button x:Name="btnReadPlayersXml" Content="Lue pelaajat (xml)" Margin="5,5,5,0" Click="btnReadPlayersXml_Click" />
+                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,5,5,0" Click="btnSaveToDatabase_Click" Visibility="Hidden"/>
                 <Button x:Name="btnExit" Content="Lopetus" Margin="5,5,5,0" Click="btnExit_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">

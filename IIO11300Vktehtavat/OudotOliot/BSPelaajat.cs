@@ -1,18 +1,23 @@
 ﻿/*
 * Copyright (C) JAMK/IT/Esa Salmikangas
 * This file is part of the IIO11300 course project.
-* Created: 13.2.2016 Modified: 17.2.2016
+* Created: 13.2.2016 Modified: 20.2.2016
 * Authors: Mika Mähönen (K6058), Esa Salmikangas
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml.Serialization;
 
-namespace OudotOliot
+namespace JAMK.IT.IIO11300
 {
   public class Pelaajat
   {
@@ -39,6 +44,135 @@ namespace OudotOliot
       catch (Exception ex)
       {
         throw ex;
+      }
+    }
+
+    /// <summary>
+    /// Get player from txt-file
+    /// </summary>
+    /// <param name="filePath">File path to read</param>
+    public List<Pelaaja> GetPlayersFromTxtFile(string filePath)
+    {
+      playerList.Clear();
+
+      try
+      {
+        var lines = File.ReadAllLines(filePath);
+        string[] items;
+        Pelaaja player;
+
+        foreach (var line in lines)
+        {
+          items = line.Split(',');
+
+          if (items.Length >= 4)
+          {
+            player = new Pelaaja(items[1], items[2], int.Parse(items[3]), items[4]);
+            player.Id = int.Parse(items[0]);
+            playerList.Add(player);
+          }
+        }
+
+        return playerList;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+    /// <summary>
+    /// Serialize players into bin-file
+    /// </summary>
+    /// <param name="filePath">Saving path</param>
+    /// <param name="ic">Collection to serialize</param>
+    public static void SerializePlayersToBinFile(string filePath, ICollection ic)
+    {
+      FileStream fs = new FileStream(filePath, FileMode.Create);
+      BinaryFormatter bf = new BinaryFormatter();
+
+      try
+      {
+        bf.Serialize(fs, ic);
+      }
+      catch (SerializationException se)
+      {
+        throw se;
+      }
+      finally
+      {
+        fs.Close();
+      }
+    }
+
+    /// <summary>
+    /// Deserialize players from bin-file
+    /// </summary>
+    /// <param name="filePath">File path to deserialize</param>
+    /// <param name="obj">Deserialized object containing data</param>
+    public static void DeserializePlayersFromBinFile(string filePath, ref object obj)
+    {
+      FileStream fs = new FileStream(filePath, FileMode.Open);
+
+      try
+      {
+        BinaryFormatter bf = new BinaryFormatter();
+        obj = bf.Deserialize(fs);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+      finally
+      {
+        fs.Close();
+      }
+    }
+
+    /// <summary>
+    /// Serialize players into xml-file
+    /// </summary>
+    /// <param name="filePath">Saving path</param>
+    /// <param name="ic">Collection to serialize</param>
+    public static void SerializePlayersToXmlFile(string filePath, ICollection ic)
+    {
+      XmlSerializer xs = new XmlSerializer(ic.GetType());
+      TextWriter tw = new StreamWriter(filePath);
+
+      try
+      {
+        xs.Serialize(tw, ic);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+      finally
+      {
+        tw.Close();
+      }
+    }
+
+    /// <summary>
+    /// Deserialize players from xml-file
+    /// </summary>
+    /// <param name="filePath">File path to deserialize</param>
+    public static List<Pelaaja> DeserializePlayersFromXmlFile(string filePath)
+    {
+      XmlSerializer deserializer = new XmlSerializer(typeof(List<Pelaaja>));
+      TextReader tr = new StreamReader(filePath);
+
+      try
+      {
+        return (List<Pelaaja>)deserializer.Deserialize(tr);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+      finally
+      {
+        tr.Close();
       }
     }
 
@@ -215,7 +349,7 @@ ORDER BY seura, sukunimi, etunimi
 
         foreach (Pelaaja player in playerList)
         {
-          sb.AppendLine(string.Format("{0},{1},{2},{3}", player.Etunimi, player.Sukunimi, player.Siirtohinta, player.Seura));
+          sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", player.Id, player.Etunimi, player.Sukunimi, player.Siirtohinta, player.Seura));
         }
 
         return sb.ToString();
