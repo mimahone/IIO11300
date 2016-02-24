@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 
 namespace XML_Viinikellari
@@ -24,28 +13,50 @@ namespace XML_Viinikellari
     public MainWindow()
     {
       InitializeComponent();
+      cboCountry.ItemsSource = getCountryList();
+    }
+
+    private SortedSet<string> getCountryList()
+    {
+      try
+      {
+        SortedSet<string> countryList = new SortedSet<string>();
+        XmlDocument doc = new XmlDocument();
+        doc.Load(@"..\..\Viinit1.xml");
+
+        XmlNodeList countryNodes = doc.SelectNodes("viinikellari/wine/maa");
+
+        foreach (XmlElement countryNode in countryNodes)
+        {
+          countryList.Add(countryNode.InnerText);
+        }
+
+        return countryList;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
 
     private void btnGetWines_Click(object sender, RoutedEventArgs e)
     {
-      // Poistetaan käyttäjän valitsema elokuva --> poistettava Node haetaan Name-attribuutin avulla
       try
       {
-        string filu = xdpWines.Source.LocalPath;
         XmlDocument doc = xdpWines.Document;
-        XmlNode root = doc.SelectSingleNode("/viinikellari");
 
-        // Haetaan XPathilla poistettava node
-        var country = doc.SelectSingleNode(string.Format("/viinikellari/wine[@maa='{0}']", cboCountry.Text));
+        // Haetaan XPathilla valitun maan nodet
+        var countryWineList = doc.SelectNodes(string.Format("/viinikellari/wine[maa='{0}']", cboCountry.SelectedValue));
 
-        if (country != null)
+        if (countryWineList != null)
         {
-          
+          grdWines.ItemsSource = countryWineList;
+          lblInfo.Text = string.Format("Viinit joiden valmistusmaa on {0}", cboCountry.SelectedValue);
         }
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message);
+        lblInfo.Text = string.Format("Viinien haussa tapahtui virhe: {0}",  ex.Message);
       }
     }
 
