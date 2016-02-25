@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H5Movies", "H5Movies\H5Movi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML-Viinikellari", "XML-Viinikellari\XML-Viinikellari.csproj", "{48627DFE-F59F-4575-8126-E2AD230FEADB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H6DataBinding", "H6DataBinding\H6DataBinding.csproj", "{84507E0A-9236-450E-B832-3C4B0CC23C60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{48627DFE-F59F-4575-8126-E2AD230FEADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48627DFE-F59F-4575-8126-E2AD230FEADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48627DFE-F59F-4575-8126-E2AD230FEADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
