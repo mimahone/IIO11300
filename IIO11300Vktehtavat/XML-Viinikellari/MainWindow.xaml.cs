@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Windows;
 using System.Xml;
 
@@ -10,10 +11,17 @@ namespace XML_Viinikellari
   /// </summary>
   public partial class MainWindow : Window
   {
+    public string XMLFilePath
+    {
+      get { return ConfigurationManager.AppSettings["XMLFilePath"]; }
+    }
+
     public MainWindow()
     {
       InitializeComponent();
       cboCountry.ItemsSource = getCountryList();
+      xdpWines.Source = new Uri(XMLFilePath);
+      lblPath.Text = XMLFilePath;
     }
 
     private SortedSet<string> getCountryList()
@@ -22,7 +30,7 @@ namespace XML_Viinikellari
       {
         SortedSet<string> countryList = new SortedSet<string>();
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"..\..\Viinit1.xml");
+        doc.Load(XMLFilePath);
 
         XmlNodeList countryNodes = doc.SelectNodes("viinikellari/wine/maa");
 

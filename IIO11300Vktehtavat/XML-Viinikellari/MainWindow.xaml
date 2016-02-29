@@ -24,7 +24,7 @@
                 	Width="150"
                     ItemsSource="{Binding XPath=/viinikellari/wine/maa}" />
             </StackPanel>
-
+            
             <DataGrid x:Name="grdWines"
                     Margin="10"
                     ItemsSource="{Binding XPath=/viinikellari/wine}"
@@ -41,7 +41,14 @@
         <DockPanel VerticalAlignment="Bottom">
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
-                    <TextBlock Name="lblInfo" Text="Kaikki viinit" />
+                    <Border BorderThickness="1" BorderBrush="Silver" Padding="5 0 5 0"> 
+                        <TextBlock Name="lblPath" Text="Viinit1.xml" />
+                    </Border>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <Border BorderThickness="1" BorderBrush="Silver" Padding="5 0 5 0">
+                        <TextBlock Name="lblInfo" Text="Kaikki viinit" />
+                    </Border>
                 </StatusBarItem>
             </StatusBar>
         </DockPanel>
