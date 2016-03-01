@@ -15,25 +15,25 @@
                 <PasswordBox x:Name="pwdPassword" KeyUp="pwdPassword_KeyUp" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding ElementName=pwdPassword, Path=Password.Length}" />
+                <TextBlock Text="{Binding Chars}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblUpperCaseLetters" Text="{Binding Path=UpperCaseLetters}" />
+                <TextBlock Text="{Binding UpperCaseLetters}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblLowerCaseLetters" Text="{Binding Path=LowerCaseLetters}" />
+                <TextBlock Text="{Binding LowerCaseLetters}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblNumbers" Text="{Binding Path=Numbers}" />
+                <TextBlock Text="{Binding Numbers}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblSpecialMarks" Text="{Binding Path=SpecialMarks}" />
+                <TextBlock Text="{Binding SpecialMarks}" />
             </StackPanel>
         </StackPanel>
-        <DockPanel VerticalAlignment="Bottom">
+        <DockPanel x:Name="dpPasswordStrength" VerticalAlignment="Bottom">
             <StatusBar DockPanel.Dock="Bottom" x:Name="ratingBar">
-                <StatusBarItem>
-                    <TextBlock Name="ratingText" Text="anna salasana" FontSize="48" />
+                <StatusBarItem Background="{Binding StrengthnessColor}">
+                    <TextBlock Name="ratingText" Text="{Binding Strengthness}" FontSize="48" />
                 </StatusBarItem>
             </StatusBar>
         </DockPanel>

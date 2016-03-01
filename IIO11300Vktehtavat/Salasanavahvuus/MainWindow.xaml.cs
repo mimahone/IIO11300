@@ -13,7 +13,8 @@ namespace Salasanavahvuus
     public MainWindow()
     {
       InitializeComponent();
-      spPasswordStrength.DataContext = ps;
+      spPasswordStrength.DataContext = PasswordChecker;
+      dpPasswordStrength.DataContext = PasswordChecker;
       pwdPassword.Focus();
     }
 
