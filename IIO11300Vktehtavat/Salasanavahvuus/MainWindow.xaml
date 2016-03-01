@@ -15,19 +15,19 @@
                 <PasswordBox x:Name="pwdPassword" KeyUp="pwdPassword_KeyUp" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding Chars}" />
+                <TextBlock Text="{Binding Chars, StringFormat=Merkkejä: {0}}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding UpperCaseLetters}" />
+                <TextBlock Text="{Binding UpperCaseLetters, StringFormat=Isoja kirjaimia: {0}}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding LowerCaseLetters}" />
+                <TextBlock Text="{Binding LowerCaseLetters, StringFormat=Pieniä kirjaimia: {0}}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding Numbers}" />
+                <TextBlock Text="{Binding Numbers, StringFormat=Numeroita: {0}}" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{Binding SpecialMarks}" />
+                <TextBlock Text="{Binding SpecialMarks, StringFormat=Erikoismerkkejä: {0}}" />
             </StackPanel>
         </StackPanel>
         <DockPanel x:Name="dpPasswordStrength" VerticalAlignment="Bottom">
