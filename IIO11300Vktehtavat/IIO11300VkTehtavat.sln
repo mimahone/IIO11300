@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML-Viinikellari", "XML-Vii
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H6DataBinding", "H6DataBinding\H6DataBinding.csproj", "{84507E0A-9236-450E-B832-3C4B0CC23C60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salasanavahvuus", "Salasanavahvuus\Salasanavahvuus.csproj", "{91E79B80-6087-4613-8C95-960BE098D438}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84507E0A-9236-450E-B832-3C4B0CC23C60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91E79B80-6087-4613-8C95-960BE098D438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91E79B80-6087-4613-8C95-960BE098D438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91E79B80-6087-4613-8C95-960BE098D438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91E79B80-6087-4613-8C95-960BE098D438}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
