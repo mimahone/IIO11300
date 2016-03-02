@@ -1,27 +1,43 @@
-﻿using System.ComponentModel;
+﻿/*
+* Copyright (C) JAMK/IT/Esa Salmikangas
+* This file is part of the IIO11300 course project.
+* Created: 1.3.2016 Modified: 2.3.2016
+* Authors: Mika Mähönen (K6058), Esa Salmikangas
+*/
+
+using System.ComponentModel;
 using System.Linq;
 
-namespace Salasanavahvuus
+namespace JAMK.IT.IIO11300
 {
+  /// <summary>
+  /// Class for PasswordStrength
+  /// </summary>
   public class PasswordStrength : INotifyPropertyChanged
   {
-    public event PropertyChangedEventHandler PropertyChanged;
+    #region CONSTRUCTOR
 
-    protected void OnPropertyChanged(string name)
-    {
-      if (PropertyChanged != null)
-      {
-        PropertyChanged(this, new PropertyChangedEventArgs(name));
-      }
-    }
-
+    /// <summary>
+    /// Constructor with password
+    /// </summary>
+    /// <param name="password">Password to evaluate</param>
     public PasswordStrength(string password = "")
     {
       Password = password;
     }
 
-    private string _password = "";
+    #endregion //CONSTRUCTOR
 
+    #region PROPERTIES and FIELDS
+
+    /// <summary>
+    /// Field for Password
+    /// </summary>
+    protected string _password = "";
+
+    /// <summary>
+    /// Property for Password
+    /// </summary>
     public string Password
     {
       get
@@ -46,33 +62,87 @@ namespace Salasanavahvuus
       }
     }
 
+    /// <summary>
+    /// Property to get Password characters count
+    /// </summary>
     public int Chars { get { return Password.Length; } }
 
+    /// <summary>
+    /// Property to get Password uppercase letters count
+    /// </summary>
     public int UpperCaseLetters { get { return Password.Count(c => char.IsUpper(c)); } }
 
+    /// <summary>
+    /// Property to get Password lowercase letters count
+    /// </summary>
     public int LowerCaseLetters { get { return Password.Count(c => char.IsLower(c)); } }
 
+    /// <summary>
+    /// Property to get Password numbers count
+    /// </summary>
     public int Numbers { get { return Password.Count(c => char.IsNumber(c)); } }
 
+    /// <summary>
+    /// Property to get Password special marks count
+    /// </summary>
     public int SpecialMarks { get { return Password.Count(c => !char.IsLetterOrDigit(c)); } }
 
-    private int _markTypes = 0;
+    /// <summary>
+    /// Field for Strengthness
+    /// </summary>
+    protected string _strengthness = "anna salasana";
 
-    private string _strengthness = "anna salasana";
-
+    /// <summary>
+    /// Property to get Password strengthness description text
+    /// </summary>
     public string Strengthness
     {
       get { return _strengthness; }
     }
 
-    private string _strengthnessColor = "";
+    /// <summary>
+    /// Field for StrengthnessColor
+    /// </summary>
+    protected string _strengthnessColor = "";
 
+    /// <summary>
+    /// Property to get Password strengthness color as string
+    /// </summary>
     public string StrengthnessColor
     {
       get { return _strengthnessColor; }
     }
 
-    private void countMarkTypes()
+    #endregion //PROPERTIES and FIELDS
+
+    #region HELPER METHODS and FIELDS
+
+    /// <summary>
+    /// Event for PropertyChangedEventHandler
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    /// <summary>
+    /// Helper method for OnPropertyChanged
+    /// </summary>
+    /// <param name="name">Name of changed property</param>
+    protected void OnPropertyChanged(string name)
+    {
+      if (PropertyChanged != null)
+      {
+        PropertyChanged(this, new PropertyChangedEventArgs(name));
+      }
+    }
+
+    /// <summary>
+    /// Field for count of MarkTypes
+    /// </summary>
+    protected int _markTypes = 0;
+
+    /// <summary>
+    /// Helper method to count marks types of password
+    /// </summary>
+    protected void countMarkTypes()
     {
       int i = 0;
       if (UpperCaseLetters > 0) i++;
@@ -82,7 +152,10 @@ namespace Salasanavahvuus
       _markTypes = i;
     }
 
-    private void getStrengthness()
+    /// <summary>
+    /// Helper method to get strengthness description of password
+    /// </summary>
+    protected void getStrengthness()
     {
       if (Chars == 0)
       {
@@ -116,7 +189,10 @@ namespace Salasanavahvuus
       }     
     }
 
-    private void getStrengthnessColor()
+    /// <summary>
+    /// Helper method to get strengthness color as string according strengthness description
+    /// </summary>
+    protected void getStrengthnessColor()
     {
       switch (_strengthness)
       {
@@ -137,7 +213,8 @@ namespace Salasanavahvuus
           break;
       }
     }
+
+    #endregion //HELPER METHODS and FIELDS
   }
 }
 
-//https://msdn.microsoft.com/fi-fi/library/ms752039%28v=vs.100%29.aspx
