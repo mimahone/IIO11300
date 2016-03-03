@@ -10,8 +10,9 @@
         <Grid.DataContext>
             <XmlDataProvider x:Name="xdpWines" Source="Viinit1.xml" XPath="/viinikellari/wine" />
         </Grid.DataContext>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
+        
+        <DockPanel>
+            <StatusBar DockPanel.Dock="Top">
                 <Button 
                     x:Name="btnGetWines"
                     Content="Hae viinit"
@@ -23,22 +24,8 @@
                 	Margin="10,5,0,0"
                 	Width="150"
                     ItemsSource="{Binding XPath=/viinikellari/wine/maa}" />
-            </StackPanel>
-            
-            <DataGrid x:Name="grdWines"
-                    Margin="10"
-                    ItemsSource="{Binding XPath=/viinikellari/wine}"
-                    AutoGenerateColumns="False"
-                    VerticalScrollBarVisibility="Visible">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Viini" Binding="{Binding XPath=nimi}" />
-                    <DataGridTextColumn Header="Pisteet" Binding="{Binding XPath=arvio}" />
-                    <DataGridTextColumn Header="Valmistusmaa" Binding="{Binding XPath=maa}" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-
-        <DockPanel VerticalAlignment="Bottom">
+            </StatusBar>
+        
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
                     <Border BorderThickness="1" BorderBrush="Silver" Padding="5 0 5 0"> 
@@ -51,6 +38,18 @@
                     </Border>
                 </StatusBarItem>
             </StatusBar>
+
+            <DataGrid x:Name="grdWines"
+                    Margin="10"
+                    ItemsSource="{Binding XPath=/viinikellari/wine}"
+                    AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Viini" Binding="{Binding XPath=nimi}" />
+                    <DataGridTextColumn Header="Pisteet" Binding="{Binding XPath=arvio}" />
+                    <DataGridTextColumn Header="Valmistusmaa" Binding="{Binding XPath=maa}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            
         </DockPanel>
     </Grid>
 </Window>
