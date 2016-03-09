@@ -78,5 +78,11 @@ namespace H6DataBinding
       pos = liigajoukkueet.Count - 1;
       spLiiga.DataContext = liigajoukkueet[pos];
     }
+
+    private void btnShowPlayers_Click(object sender, RoutedEventArgs e)
+    {
+      PlayerWindow win = new PlayerWindow();
+      win.ShowDialog();
+    }
   }
 }

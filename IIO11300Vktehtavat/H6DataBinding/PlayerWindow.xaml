@@ -1,0 +1,29 @@
+﻿<Window x:Class="H6DataBinding.PlayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H6DataBinding"
+        mc:Ignorable="d"
+        Title="PlayerWindow" Height="300" Width="600">
+    <Grid x:Name="myGrid">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="250">
+                <!-- Yksittäisen pelaajan tiedot -->
+                <TextBlock>Pelaaja#nro</TextBlock>
+                <TextBlock x:Name="tbName" Text="{Binding Path=NameAndNumber, Mode=OneWay}" Background="Aquamarine" Foreground="Blue" />
+                <TextBlock>Nimi</TextBlock>
+                <TextBox x:Name="txtName" Text="{Binding Path=Name, Mode=TwoWay}" />
+                <TextBlock>Numero</TextBlock>
+                <TextBox x:Name="txtNumber" Text="{Binding Path=Number, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Width="350">
+                <!-- Gridi kaikille pelaajille -->
+                <TextBlock>Pelaajat:</TextBlock>
+                <DataGrid x:Name="dgPlayers" FontSize="12" SelectionChanged="dgPlayers_SelectionChanged">
+                    
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
