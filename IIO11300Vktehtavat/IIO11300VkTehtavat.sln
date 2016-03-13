@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salasanavahvuus", "Salasana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H7ADOConsole", "H7ADOConsole\H7ADOConsole.csproj", "{DDBEAC85-7DA9-4459-B786-DF99585A9DF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viiniasiakkaat", "Viiniasiakkaat\Viiniasiakkaat.csproj", "{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{DDBEAC85-7DA9-4459-B786-DF99585A9DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDBEAC85-7DA9-4459-B786-DF99585A9DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDBEAC85-7DA9-4459-B786-DF99585A9DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

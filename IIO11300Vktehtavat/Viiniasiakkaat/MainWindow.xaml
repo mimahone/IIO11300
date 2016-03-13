@@ -1,0 +1,40 @@
+﻿<Window x:Class="Viiniasiakkaat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Viiniasiakkaat"
+        mc:Ignorable="d"
+        Title="ViiniAsiakkaat" Height="350" Width="525">
+    <Grid>
+        <DockPanel>
+            
+            <StackPanel DockPanel.Dock="Left">
+                <Button 
+                    x:Name="btnGetCustomers"
+                    Content="Hae asiakkaat"
+                    Width="150" Click="btnGetCustomers_Click"/>
+                <!--<ListBox Name="listBox1" DataContext="{StaticResource BusinessData}" ItemsSource="{Binding myCollection}" SelectedValuePath="ID" DisplayMemberPath="Value"/>-->
+                <ListBox 
+                    x:Name="lbxCustomers"
+                    ItemsSource="{Binding}"
+                    DisplayMemberPath="{Binding Path=Lastname}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectionMode="Single"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Right" Margin="10,0,10,0">
+                <TextBlock>Etunimi:</TextBlock>
+                <TextBox Text="{Binding FirstName}" />
+                <TextBlock>Sukunimi:</TextBlock>
+                <TextBox Text="{Binding LastName}" />
+                <TextBlock>Osoite:</TextBlock>
+                <TextBox Text="{Binding Address}" />
+                <TextBlock>Kaupunki:</TextBlock>
+                <TextBox Text="{Binding City}" />
+            </StackPanel>
+
+        </DockPanel>
+    </Grid>
+</Window>
