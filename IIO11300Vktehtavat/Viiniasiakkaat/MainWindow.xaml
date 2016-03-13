@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Viiniasiakkaat"
         mc:Ignorable="d"
         Title="ViiniAsiakkaat" Height="350" Width="525">
-    <Grid>
+    <Grid x:Name="myGrid">
         <DockPanel>
             
             <StackPanel DockPanel.Dock="Left">
@@ -14,7 +14,7 @@
                     x:Name="btnGetCustomers"
                     Content="Hae asiakkaat"
                     Width="150" Click="btnGetCustomers_Click"/>
-                <!--<ListBox Name="listBox1" DataContext="{StaticResource BusinessData}" ItemsSource="{Binding myCollection}" SelectedValuePath="ID" DisplayMemberPath="Value"/>-->
+
                 <ListBox 
                     x:Name="lbxCustomers"
                     ItemsSource="{Binding}"
@@ -26,9 +26,9 @@
 
             <StackPanel DockPanel.Dock="Right" Margin="10,0,10,0">
                 <TextBlock>Etunimi:</TextBlock>
-                <TextBox Text="{Binding FirstName}" />
+                <TextBox Text="{Binding Firstname}" />
                 <TextBlock>Sukunimi:</TextBlock>
-                <TextBox Text="{Binding LastName}" />
+                <TextBox Text="{Binding Lastname}" />
                 <TextBlock>Osoite:</TextBlock>
                 <TextBox Text="{Binding Address}" />
                 <TextBlock>Kaupunki:</TextBlock>

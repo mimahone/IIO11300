@@ -30,6 +30,7 @@ namespace Viiniasiakkaat
           //sidotaan datatable UI-kontrolliin
           //Aseta ListBoxin dataconteksi DataTable ja aseta sopivasti sen DisplayMemberPath
           lbxCustomers.DataContext = dt;
+          myGrid.DataContext = dt;
           lbxCustomers.DisplayMemberPath = "Firstname";
           conn.Close();
         }
