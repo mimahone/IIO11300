@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H7ADOConsole", "H7ADOConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viiniasiakkaat", "Viiniasiakkaat\Viiniasiakkaat.csproj", "{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H10ADOBlanco", "IIO13200-ADONET-DEMO-master\H10ADOBlanco.csproj", "{078B472F-E0BE-4705-A004-3F2A11A96896}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{771F8536-A9AF-4CC3-97A7-F4A4AD886AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078B472F-E0BE-4705-A004-3F2A11A96896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078B472F-E0BE-4705-A004-3F2A11A96896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078B472F-E0BE-4705-A004-3F2A11A96896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078B472F-E0BE-4705-A004-3F2A11A96896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

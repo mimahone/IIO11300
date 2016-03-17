@@ -1,0 +1,24 @@
+﻿<Window x:Class="JAMK.ICT.ADOBlanco.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ADO.NET Test Bench" Height="350" Width="525" Background="CadetBlue" FontSize="14" Icon="GitHub.ico">
+  <DockPanel Background="#FF1B829B" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="True">
+    <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+      <StackPanel Orientation="Horizontal" >
+        <Button x:Name="btnGet3" Content="Get test customers" Margin="10,10,0,0" Click="btnGet3_Click"/>
+        <Button x:Name="btnGetAll" Content="Get all customers" Margin="10,10,0,0" Click="btnGetAll_Click"/>
+        <Button x:Name="btnGetFrom" Content="Get customers from" Margin="10,10,0,0" Click="btnGetFrom_Click"/>
+        <ComboBox x:Name="cbCountries" Margin="10,10,0,0" SelectionChanged="cbCountries_SelectionChanged"/>
+        <Button x:Name="btnYield" Content="Get JSON" Margin="10,10,0,0" Click="btnYield_Click" />
+            </StackPanel>
+    </StackPanel>
+    <StackPanel x:Name="spLowest" DockPanel.Dock="Bottom">
+      <StatusBar>
+        <StatusBarItem>
+          <Label x:Name="lbMessages" Content="Messages goes here..." />
+        </StatusBarItem>
+      </StatusBar>
+    </StackPanel>
+    <DataGrid x:Name="dgCustomers" AutoGenerateColumns="True" ItemsSource="{Binding}"/>
+  </DockPanel >
+</Window>
