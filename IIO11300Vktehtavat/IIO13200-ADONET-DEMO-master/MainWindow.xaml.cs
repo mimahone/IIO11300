@@ -43,8 +43,8 @@ namespace JAMK.ICT.ADOBlanco
     private void FillMyCombo()
     {
       var result = (from c in dt.AsEnumerable()
-                    select c.Field<string>("city")).Distinct().ToList();
-      cbCountries.ItemsSource = result;
+                    select c.Field<string>("city")).Distinct().OrderBy(c => c).ToList();
+      cbCities.ItemsSource = result;
     }
 
     private void btnGet3_Click(object sender, RoutedEventArgs e)
@@ -79,18 +79,18 @@ namespace JAMK.ICT.ADOBlanco
 
     private void btnYield_Click(object sender, RoutedEventArgs e)
     {
-        JSON.JSONPlacebo2015 roskaa = new JSON.JSONPlacebo2015();
-        MessageBox.Show(roskaa.Yield());
+      JSON.JSONPlacebo2015 roskaa = new JSON.JSONPlacebo2015();
+      MessageBox.Show(roskaa.Yield());
     }
 
-    private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void cbCities_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {      
       string msg = "";
 
       try
       {
         // Haetaan asiakkaat valitusta kaupungista
-        dt.DefaultView.RowFilter = string.Format("city='{0}'", cbCountries.SelectedValue);
+        dt.DefaultView.RowFilter = string.Format("city='{0}'", cbCities.SelectedValue);
         dgCustomers.ItemsSource = dt.DefaultView;
       }
       catch (Exception ex)

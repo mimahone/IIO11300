@@ -8,7 +8,7 @@
         <Button x:Name="btnGet3" Content="Get test customers" Margin="10,10,0,0" Click="btnGet3_Click"/>
         <Button x:Name="btnGetAll" Content="Get all customers" Margin="10,10,0,0" Click="btnGetAll_Click"/>
         <Button x:Name="btnGetFrom" Content="Get customers from" Margin="10,10,0,0" Click="btnGetFrom_Click"/>
-        <ComboBox x:Name="cbCountries" Margin="10,10,0,0" SelectionChanged="cbCountries_SelectionChanged"/>
+        <ComboBox x:Name="cbCities" Margin="10,10,0,0" SelectionChanged="cbCities_SelectionChanged"/>
         <Button x:Name="btnYield" Content="Get JSON" Margin="10,10,0,0" Click="btnYield_Click" />
             </StackPanel>
     </StackPanel>
