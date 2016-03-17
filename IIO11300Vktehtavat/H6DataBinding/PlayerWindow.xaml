@@ -13,9 +13,9 @@
                 <TextBlock>Pelaaja#nro</TextBlock>
                 <TextBlock x:Name="tbName" Text="{Binding Path=NameAndNumber, Mode=OneWay}" Background="Aquamarine" Foreground="Blue" />
                 <TextBlock>Nimi</TextBlock>
-                <TextBox x:Name="txtName" Text="{Binding Path=Name, Mode=TwoWay}" />
+                <TextBox x:Name="txtName" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
                 <TextBlock>Numero</TextBlock>
-                <TextBox x:Name="txtNumber" Text="{Binding Path=Number, Mode=TwoWay}" />
+                <TextBox x:Name="txtNumber" Text="{Binding Path=Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel Width="350">
                 <!-- Gridi kaikille pelaajille -->
