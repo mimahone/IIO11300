@@ -52,22 +52,5 @@ namespace JAMK.ICT.Data
         }
     }
 
-    public static DataTable GetCitiesFromSQLServer(string connectionStr, string taulu)
-    {
-      try
-      {
-        SqlConnection myConn = new SqlConnection(connectionStr);
-        myConn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT DISTINCT city FROM " + taulu, myConn);
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        DataSet ds = new DataSet();
-        da.Fill(ds, taulu);
-        return ds.Tables[taulu];
-      }
-      catch (Exception ex)
-      {
-        throw;
-      }
-    }
   }
 }

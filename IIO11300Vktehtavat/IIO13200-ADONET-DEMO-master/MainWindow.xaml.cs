@@ -1,6 +1,7 @@
 ﻿using JAMK.ICT.Data;
 using System;
 using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,13 +42,9 @@ namespace JAMK.ICT.ADOBlanco
 
     private void FillMyCombo()
     {
-      // Täytetään ComboBox kaupunkien nimillä
-      // VE1 haetaan palvelimelta
-      cbCountries.ItemsSource = DBPlacebo.GetCitiesFromSQLServer(connStr, tableName).DefaultView;
-      cbCountries.DisplayMemberPath = "city";
-      cbCountries.SelectedValuePath = "city";
-
-      // VE2 haetaan dt-muuttujasta
+      var result = (from c in dt.AsEnumerable()
+                    select c.Field<string>("city")).Distinct().ToList();
+      cbCountries.ItemsSource = result;
     }
 
     private void btnGet3_Click(object sender, RoutedEventArgs e)
