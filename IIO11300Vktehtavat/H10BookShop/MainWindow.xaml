@@ -1,0 +1,66 @@
+﻿<Window x:Class="H10BookShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H10BookShop"
+        mc:Ignorable="d"
+        Title="Wanhojen Kirjojen Kauppa ORM" Height="350" Width="525">
+    <Grid>
+
+        <StackPanel Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="140" HorizontalAlignment="Left" Margin="5">
+                    <Button x:Name="btnGetTestBooks" Content="Hae testikirjat" Margin="5" Click="btnGetTestBooks_Click" />
+                    <Button x:Name="btnGetBooks" Content="Hae kirjat SQL Server" Margin="5" Click="btnGetBooks_Click" />
+                </StackPanel>
+
+                <StackPanel Name="spBook" Orientation="Horizontal">
+                    <Grid x:Name = "FormLayoutGrid" Background = "LightGray">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="250" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                            <RowDefinition Height = "*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Tuote" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Name="txtBook" Text="{Binding Mode=OneWay}" Margin="5"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Nimi" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtName" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Kirjailija" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="txtAuthor" Text="{Binding Path=Author, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Maa" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="txtCountry" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Vuosi" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Name="txtYear" Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="50" HorizontalAlignment="Left" />
+                        
+                        <Button Grid.Row="5" Grid.Column="1" x:Name="btnSave" Content="Tallenna" Click="btnSave_Click" />
+                        <Button Grid.Row="6" Grid.Column="1" x:Name="btnNew" Content="Uusi" Click="btnNew_Click" />
+                        <Button Grid.Row="7" Grid.Column="1" x:Name="btnDelete" Content="Poista" Click="btnDelete_Click" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <DataGrid Name="dgBooks" AutoGenerateColumns="True" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="5" SelectionChanged="dgBooks_SelectionChanged" />
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
