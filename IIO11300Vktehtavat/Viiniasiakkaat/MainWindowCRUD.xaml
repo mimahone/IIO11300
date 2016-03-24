@@ -22,18 +22,18 @@
                 <Button x:Name="btnGetCustomers" Content="Hae asiakkaat" Click="btnGetCustomers_Click" />
                 
                 <Button x:Name="btnNewCustomer" Content="Tee uusi" Click="btnNewCustomer_Click" />
-                <StackPanel x:Name="spNewCustomer" Orientation="Horizontal" Height="0">
+                <StackPanel x:Name="spCustomer" Orientation="Horizontal">
                     <TextBlock>Etunimi</TextBlock>
-                    <TextBox x:Name="txtFirstName" Text="{Binding Firstname}" Style="{StaticResource myTextBoxStyle}" />
+                    <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" Style="{StaticResource myTextBoxStyle}" />
                     <TextBlock>Sukunimi</TextBlock>
-                    <TextBox x:Name="txtLastName" Text="{Binding Lastname}" Style="{StaticResource myTextBoxStyle}" />
+                    <TextBox x:Name="txtLastName" Text="{Binding LastName}" Style="{StaticResource myTextBoxStyle}" />
                     <TextBlock>Osoite</TextBlock>
                     <TextBox x:Name="txtAddress" Text="{Binding Address}" Style="{StaticResource myTextBoxStyle}" />
                     <TextBlock>Postinro</TextBlock>
                     <TextBox x:Name="txtZIP" Text="{Binding ZIP}" Style="{StaticResource myTextBoxStyle}" MinWidth="50" />
                     <TextBlock>Kaupunki</TextBlock>
                     <TextBox x:Name="txtCity" Text="{Binding City}" Style="{StaticResource myTextBoxStyle}" />
-                    <Button x:Name="btnCreateCustomer" Content="Luo uusi" Click="btnCreateCustomer_Click" />
+                    <Button x:Name="btnSaveCustomer" Content="Tallenna" Click="btnSaveCustomer_Click" />
                 </StackPanel>
 
                 <Button x:Name="btnDeleteCustomer" Content="Poista valittu" Click="btnDeleteCustomer_Click" />
@@ -47,7 +47,7 @@
                 </StatusBarItem>
             </StatusBar>
 
-            <DataGrid x:Name="grdCustomers" Margin="10" ItemsSource="{Binding}" AutoGenerateColumns="True" />
+            <DataGrid x:Name="dgCustomers" Margin="10" ItemsSource="{Binding}" AutoGenerateColumns="True" SelectionChanged="grdCustomers_SelectionChanged" />
 
         </DockPanel>
 

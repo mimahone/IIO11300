@@ -1,18 +1,8 @@
 ﻿using JAMK.IT.IIO11300;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Viiniasiakkaat
 {
@@ -21,18 +11,9 @@ namespace Viiniasiakkaat
   /// </summary>
   public partial class MainWindowCRUD : Window
   {
-    DBCustomer dao;
-    
-
     public MainWindowCRUD()
     {
       InitializeComponent();
-      IniMyStaff();
-    }
-
-    private void IniMyStaff()
-    {
-      dao = new DBCustomer();
     }
 
     private void btnGetCustomers_Click(object sender, RoutedEventArgs e)
@@ -41,7 +22,7 @@ namespace Viiniasiakkaat
 
       try
       {
-        grdCustomers.DataContext = dao.GetCustomers(out message);
+        dgCustomers.DataContext = Customers.GetCustomers(out message);
       }
       catch (Exception ex)
       {
@@ -52,34 +33,47 @@ namespace Viiniasiakkaat
       {
         lblMessage.Text = message;
       }
-      
+    }
+
+    private void grdCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      spCustomer.DataContext = dgCustomers.SelectedItem;
     }
 
     private void btnNewCustomer_Click(object sender, RoutedEventArgs e)
     {
-      spNewCustomer.Height = 20;
+      spCustomer.DataContext = null;
       txtFirstName.Focus();
     }
 
-    private void btnCreateCustomer_Click(object sender, RoutedEventArgs e)
+    private void btnSaveCustomer_Click(object sender, RoutedEventArgs e)
     {
       if (HasDetailsErrors()) return;
 
       string message = "";
+      Customer customer;
 
       try
       {
-        Customer customer = new Customer();
-        customer.FirstName = txtFirstName.Text;
-        customer.LastName = txtLastName.Text;
-        customer.Address = txtAddress.Text;
-        customer.ZIP = txtZIP.Text;
-        customer.City = txtCity.Text;
-        dao.CreateCustomer(customer, out message);
-        MessageBox.Show(message);
+        if (spCustomer.DataContext != null)
+        {
+          customer = (Customer)spCustomer.DataContext;
+          Customers.UpdateCustomer(customer, out message);
+        }
+        else
+        {
+          customer = new Customer(0);
+          customer.FirstName = txtFirstName.Text;
+          customer.LastName = txtLastName.Text;
+          customer.Address = txtAddress.Text;
+          customer.ZIP = txtZIP.Text;
+          customer.City = txtCity.Text;
+          Customers.InsertCustomer(customer, out message);
+        }
 
-        btnGetCustomers_Click(this, null);
-        spNewCustomer.Height = 0;
+        string msg = "";
+        dgCustomers.DataContext = Customers.GetCustomers(out msg);
+        SelectGridRow(customer);
       }
       catch (Exception ex)
       {
@@ -89,6 +83,28 @@ namespace Viiniasiakkaat
       finally
       {
         lblMessage.Text = message;
+      }
+    }
+
+    private void SelectGridRow(Customer customer)
+    {
+      // Vähän kömpelö rivin haku! :)
+      // TODO: Do this better!
+      Customer c;
+
+      foreach (var item in dgCustomers.Items)
+      {
+        c = (Customer)item;
+
+        if (c.FirstName.Equals(customer.FirstName) &&
+          c.LastName.Equals(customer.LastName) &&
+          c.Address.Equals(customer.Address) &&
+          c.ZIP.Equals(customer.ZIP) &&
+          c.City.Equals(customer.City))
+        {
+          dgCustomers.SelectedItem = item;
+          break;
+        }
       }
     }
 
@@ -144,27 +160,25 @@ namespace Viiniasiakkaat
 
       try
       {
-        if (grdCustomers.SelectedItem == null)
+        if (dgCustomers.SelectedItem == null)
         {
           MessageBox.Show("Valitse ensin asiakas!");
           return;
         }
 
-        object[] items = ((DataRowView)grdCustomers.SelectedItem).Row.ItemArray;
-        int id = (int)items[0];
-        string firstName = (string)items[1];
-        string lastName = (string)items[2];
+        Customer current = (Customer)spCustomer.DataContext;
 
         MessageBoxResult result = MessageBox.Show(
-            string.Format("Haluatko varmasti poistaa asiakkaan {0} {1}?", firstName, lastName),
+            string.Format("Haluatko varmasti poistaa asiakkaan {0} {1}?", current.FirstName, current.LastName),
             "Viinikellarin asiakkaat",
             MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
 
         if (result == MessageBoxResult.Yes)
         {
-          dao.DeleteCustomer(id, out message);
-          message = string.Format("Asiakas {0} {1} on poistettu", firstName, lastName);
-          btnGetCustomers_Click(this, null);
+          Customers.DeleteCustomer(current, out message);
+          message = string.Format("Asiakas {0} {1} on poistettu", current.FirstName, current.LastName);
+          string msg = "";
+          dgCustomers.DataContext = Customers.GetCustomers(out msg);
         }
       }
       catch (Exception ex)
@@ -176,5 +190,6 @@ namespace Viiniasiakkaat
         lblMessage.Text = message;
       }
     }
+
   }
 }
