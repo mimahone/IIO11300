@@ -1,7 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,151 +19,114 @@ namespace JAMK.IT.IIO11300
       IniMyStuff();
     }
 
-    private Pelaajat players = new Pelaajat();
-
     private void IniMyStuff()
     {
       // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla (+ Jokerit koska esiintyy tietokannassa)
-      string[] teams = { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
+      cboTeam.ItemsSource = new string[] { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
 
-      cboTeam.Items.Clear();
-
-      foreach (string team in teams)
-      {
-        cboTeam.Items.Add(team);
-      }
-
-      refreshPlayerList();
+      string message = "";
+      lstPlayers.DataContext = Players.GetPlayers(out message);
 
       cboTeam.SelectedIndex = 0;
       txtFirstName.Focus();
     }
 
-    private void btnCreatePlayer_Click(object sender, RoutedEventArgs e)
+    private void btnNew_Click(object sender, RoutedEventArgs e)
     {
-      /*
-      Luo uusi pelaaja: tarkistetaan että kaikissa kentissä on arvo ja tarkistetaan ettei saman nimistä pelaaja ole jo Pelaajat -oliokokoelmassa,
-      jos tarkistukset ok niin luodaan olio luokasta Pelaaja ja kirjoitetaan kuvan mukaisesti Pelaaja-olion EsitysNimi oikean puoleiseen listboxiin.
-      Huom: Liigassa voi toki olla kaksi samannimistä pelaajaa, mutta tässä tehtävän yksinkertaistamiseksi sovitaan että kahta samannimistä ei voi olla.
-      */
-      try
-      {
-        if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-        {
-          throw new Exception("etunimi puuttuu!");
-        }
-
-        if (string.IsNullOrWhiteSpace(txtLastName.Text))
-        {
-          throw new Exception("sukunimi puuttuu!");
-        }
-
-        int price = 0;
-
-        int.TryParse(txtPrice.Text, out price);
-
-        if (price < 0)
-        {
-          throw new Exception("siirtosumma ei voi olla negatiivinen!");
-        }
-
-        Pelaaja player = new Pelaaja(txtFirstName.Text, txtLastName.Text, price, cboTeam.Text);
-
-        if (players.CreatePlayer(player) != null)
-        {
-          refreshPlayerList();
-
-          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
-          lblInfo.Text = "Uusi pelaaja lisätty";
-        }
-        else
-        {
-          lblInfo.Text = "Uuden pelaajan lisäys epäonnistui!";
-        }
-      }
-      catch (Exception ex)
-      {
-        lblInfo.Text = "Tallennusta ei voitu suorittaa koska " + ex.Message;
-      }
+      Player newPlayer = new Player(0);
+      newPlayer.Status = Status.Created;
+      spPlayer.DataContext = newPlayer;
+      cboTeam.SelectedIndex = 0;
+      txtFirstName.Focus();
+      lblInfo.Text = "Uuden pelaajan lisäys";
     }
 
-    private void refreshPlayerList(List<Pelaaja> playerList)
+    private bool HasDetailsErrors(Player player)
+    {
+      bool errors = false;
+      string message = "";
+      TextBox txt = null;
+
+      if (string.IsNullOrWhiteSpace(player.FirstName))
+      {
+        txt = txtFirstName;
+        message = "etunimi puuttuu";
+        errors = true;
+      }
+
+      if (string.IsNullOrWhiteSpace(player.LastName))
+      {
+        txt = txtLastName;
+        message = "sukunimi puuttuu";
+        errors = true;
+      }
+
+      if (player.Price < 0)
+      {
+        throw new Exception("siirtosumma ei voi olla negatiivinen!");
+      }
+
+      if (errors)
+      {
+        MessageBox.Show(string.Format("Ei voi tallentaa koska {0}!", message));
+        txt.Focus();
+      }
+
+      return errors;
+    }
+
+    private void refreshPlayerList(ObservableCollection<Player> playerList)
     {
       lstPlayers.Items.Clear();
 
-      foreach (Pelaaja player in playerList)
+      foreach (Player player in playerList)
       {
-        lstPlayers.Items.Add(player.EsitysNimi);
+        lstPlayers.Items.Add(player.DisplayName);
       }
     }
 
-    private void refreshPlayerList()
+    private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-      lstPlayers.Items.Clear();
-
-      foreach (Pelaaja player in players.GetPlayers())
-      {
-        if (player.Status != Status.Deleted)
-        {
-          lstPlayers.Items.Add(player.EsitysNimi);
-        }
-      }
-    }
-
-    private void btnSavePlayer_Click(object sender, RoutedEventArgs e)
-    {
-      // Muutetaan olemassa olevan olion tietoja ja kirjoitetaan tiedot listboxiin
-      Pelaaja player = null;
-
-      if (lstPlayers.SelectedValue == null)
+      if (spPlayer.DataContext == null)
       {
         lblInfo.Text = "Tallennusta ei voitu suorittaa koska pelaajaa ei ole valittu listalta";
         return;
       }
-      else
-      {
-        player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
-      }
+
+      Player player = (Player)spPlayer.DataContext;
+
+      if (HasDetailsErrors(player)) return; // Tarkistetaan että kaikissa kentissä on arvo
 
       if (player != null)
       {
         try
         {
-          if (string.IsNullOrWhiteSpace(txtFirstName.Text))
+          // Tarkistetaan ettei saman nimistä pelaaja ole jo Pelaajat -oliokokoelmassa
+          Player found = ((ObservableCollection<Player>)lstPlayers.DataContext).FirstOrDefault(p => p.FullName == player.FullName && p.Id != player.Id);
+
+          if (found != null)
           {
-            throw new Exception("etunimi puuttuu!");
+            MessageBox.Show("Saman niminen pelaaja on jo listalla!");
+            throw new Exception("saman niminen pelaaja on jo listalla!");
           }
 
-          if (string.IsNullOrWhiteSpace(txtLastName.Text))
+          string message = "";
+          if (player.Id > 0)
           {
-            throw new Exception("sukunimi puuttuu!");
-          }
-
-          int price = 0;
-
-          int.TryParse(txtPrice.Text, out price);
-
-          if (price < 0)
-          {
-            throw new Exception("siirtosumma ei voi olla negatiivinen!");
-          }
-
-          player.Etunimi = txtFirstName.Text;
-          player.Sukunimi = txtLastName.Text;
-          player.Siirtohinta = price;
-          player.Seura = cboTeam.Text;
-
-          if (players.UpdatePlayer(player) != null)
-          {
-            refreshPlayerList();
-
-            lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.EsitysNimi);
-            lblInfo.Text = "Pelaajan tiedot on päivitetty";
+            player.Status = Status.Modified;
+            Players.UpdatePlayer(player, out message);
           }
           else
           {
-            lblInfo.Text = "Pelaajan tietojen päivitys epäonnistui!";
+            player.Status = Status.Created;
+            Players.InsertPlayer(player, out message);
           }
+
+          string msg = "";
+          lstPlayers.DataContext = Players.GetPlayers(out msg);
+
+          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.DisplayName);
+          lblInfo.Text = message;
         }
         catch (Exception ex)
         {
@@ -171,31 +135,60 @@ namespace JAMK.IT.IIO11300
       }
     }
 
-    private void btnDeletePlayer_Click(object sender, RoutedEventArgs e)
+    private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
-      // Poistetaan oliokokoelmasta sekä listboxista valittu pelaaja
-      Pelaaja player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
-
-      if (player != null)
+      try
       {
-        if (players.DeletePlayer(player))
+        Player player = (Player)lstPlayers.SelectedItem;
+
+        MessageBoxResult result = MessageBox.Show(
+          string.Format("Haluatko varmasti poistaa pelaajan {0} tiedot?", player.DisplayName), "Poiston varmistus",
+          MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+
+        if (result == MessageBoxResult.Yes)
         {
-          lstPlayers.Items.Remove(player.EsitysNimi);
-          txtId.Text = "";
-          txtFirstName.Text = "";
-          txtLastName.Text = "";
-          txtPrice.Text = "0";
-          cboTeam.SelectedIndex = 0;
-          lblInfo.Text = "Pelaajan tiedot on poistettu"; 
-        }
-        else
-        {
-          lblInfo.Text = "Pelaajan tietojen poisto epäonnistui!";
+          string message = "";
+
+          if (Players.DeletePlayer(player, out message) > 0)
+          {
+            player.Status = Status.Deleted;
+            ((ObservableCollection<Player>)lstPlayers.DataContext).Remove(player);
+            spPlayer.DataContext = null;
+          }
+
+          lblInfo.Text = message;
         }
       }
-      else
+      catch (Exception ex)
       {
-        lblInfo.Text = "Pelaajan tietoja ei voi poistaa koska poistettavaa pelaajaa ei löydy";
+        lblInfo.Text = ex.Message;
+      }
+    }
+
+    private void btnSaveToDatabase_Click(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        string message = "";
+        Players.SaveChangesToDatabase(out message);
+        string msg = "";
+        lstPlayers.DataContext = Players.GetPlayers(out msg);
+        lblInfo.Text = message;
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "Tietokantaan tallennus ei onnistunut: " + ex.Message;
+      }
+    }
+
+    private void lstPlayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      // Jos pelaajan nimeä napsautetaan listboxissa, niin pelaajan kaikki tiedot kirjoitetaan vasemmalla oleviin tekstikenttiin tietojen muokkausta varten
+      if (lstPlayers.SelectedItem != null)
+      {
+        Player player = (Player)lstPlayers.SelectedItem;
+        spPlayer.DataContext = player;
+        lblInfo.Text = string.Format("Valittu pelaaja {0}", player.DisplayName);
       }
     }
 
@@ -218,7 +211,7 @@ namespace JAMK.IT.IIO11300
 
         if (sfd.ShowDialog() == true)
         {
-          File.WriteAllText(sfd.FileName, players.GetPlayerData());
+          File.WriteAllText(sfd.FileName, Players.GetPlayerData());
           lblInfo.Text = string.Format("{0}-tiedostoon tallennus on suoritettu", sfd.FileName);
         }
       }
@@ -239,7 +232,7 @@ namespace JAMK.IT.IIO11300
 
         if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
         {
-          refreshPlayerList(players.GetPlayersFromTxtFile(ofd.FileName));
+          refreshPlayerList(Players.GetPlayersFromTxtFile(ofd.FileName));
           lblInfo.Text = string.Format("{0}-tiedoston luenta suoritettu", ofd.FileName);
         }
       }
@@ -268,7 +261,8 @@ namespace JAMK.IT.IIO11300
 
         if (sfd.ShowDialog() == true)
         {
-          Pelaajat.SerializePlayersToBinFile(sfd.FileName, players.GetPlayers());
+          string message = "";
+          DBPlayers.SerializePlayersToBinFile(sfd.FileName, Players.GetPlayers(out message));
           lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
         }
       }
@@ -290,8 +284,8 @@ namespace JAMK.IT.IIO11300
         if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
         {
           object obj = new object();
-          Pelaajat.DeserializePlayersFromBinFile(ofd.FileName, ref obj);
-          refreshPlayerList((List<Pelaaja>)obj);
+          DBPlayers.DeserializePlayersFromBinFile(ofd.FileName, ref obj);
+          refreshPlayerList((ObservableCollection<Player>)obj);
           lblInfo.Text = string.Format("{0}-tiedoston deserialisointi suoritettu", ofd.FileName);
         }
       }
@@ -320,7 +314,8 @@ namespace JAMK.IT.IIO11300
 
         if (sfd.ShowDialog() == true)
         {
-          Pelaajat.SerializePlayersToXmlFile(sfd.FileName, players.GetPlayers());
+          string message = "";
+          DBPlayers.SerializePlayersToXmlFile(sfd.FileName, Players.GetPlayers(out message));
           lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
         }
       }
@@ -341,7 +336,7 @@ namespace JAMK.IT.IIO11300
 
         if (ofd.ShowDialog() == true && File.Exists(ofd.FileName))
         {
-          refreshPlayerList(Pelaajat.DeserializePlayersFromXmlFile(ofd.FileName));
+          refreshPlayerList(DBPlayers.DeserializePlayersFromXmlFile(ofd.FileName));
           lblInfo.Text = string.Format("{0}-tiedoston deserialisointi suoritettu", ofd.FileName);
         }
       }
@@ -351,41 +346,9 @@ namespace JAMK.IT.IIO11300
       }
     }
 
-    private void btnSaveToDatabase_Click(object sender, RoutedEventArgs e)
-    {
-      try
-      {
-        players.SaveChangesToDatabase();
-        refreshPlayerList();
-        lblInfo.Text = "Tietokantaan tallennus suoritettu";
-      }
-      catch (Exception ex)
-      {
-        lblInfo.Text = "Tietokantaan tallennus ei onnistunut: " + ex.Message;
-      }
-    }
-
     private void btnExit_Click(object sender, RoutedEventArgs e)
     {
       Application.Current.Shutdown();
-    }
-
-    private void lstPlayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      // Jos pelaajan nimeä napsautetaan listboxissa, niin pelaajan kaikki tiedot kirjoitetaan vasemmalla oleviin tekstikenttiin tietojen muokkausta varten
-      if (lstPlayers.SelectedValue == null) return;
-
-      Pelaaja player = players.GetPlayerByDisplayName(lstPlayers.SelectedValue.ToString());
-
-      if (player != null)
-      {
-        txtId.Text = player.Id.ToString();
-        txtFirstName.Text = player.Etunimi;
-        txtLastName.Text = player.Sukunimi;
-        txtPrice.Text = player.Siirtohinta.ToString();
-        cboTeam.SelectedValue = player.Seura;
-        lblInfo.Text = "Valittu pelaaja " + player.EsitysNimi;
-      }
     }
 
   }

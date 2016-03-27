@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:JAMK.IT.IIO11300"
         mc:Ignorable="d"
         Title="Oudot oliot" Height="340" Width="530" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <!-- Malli listboxin tiedon esittämistä varten -->
+        <DataTemplate x:Key="DisplayName">
+            <Label Content="{Binding DisplayName}" />
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
@@ -15,28 +21,40 @@
                 <TextBlock x:Name="tbPrice" Text="Siirtohinta" Margin="5,7,5,0" />
                 <TextBlock x:Name="tbTeam" Text="Seura" Margin="5,7,0,0" />
             </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <TextBox x:Name="txtId" Margin="5,5,0,0" IsEnabled="False" />
-                <TextBox x:Name="txtFirstName" Width="120" Margin="5,5,0,0" />
-                <TextBox x:Name="txtLastName" Width="120" Margin="5,5,0,0" />
-                <TextBox x:Name="txtPrice" Width="120" Margin="5,5,0,0" Text="0"/>
-                <ComboBox x:Name="cboTeam" Margin="5,5,0,0" />
+            <StackPanel Name="spPlayer" Orientation="Vertical">
+                <TextBox x:Name="txtId" Text="{Binding Id}" Margin="5,5,0,0" IsEnabled="False" />
+                <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" MinWidth="120" Margin="5,5,0,0" />
+                <TextBox x:Name="txtLastName" Text="{Binding LastName}" MinWidth="120" Margin="5,5,0,0" />
+                <TextBox x:Name="txtPrice" Text="{Binding Price}" MinWidth="120" Margin="5,5,0,0" />
+                <ComboBox x:Name="cboTeam" Text="{Binding Team}" Margin="5,5,0,0" />
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <Button x:Name="btnCreatePlayer" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnCreatePlayer_Click"/>
-                <Button x:Name="btnSavePlayer" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSavePlayer_Click"/>
-                <Button x:Name="btnDeletePlayer" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDeletePlayer_Click"/>
+                <Button x:Name="btnNew" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnNew_Click"/>
+                <Button x:Name="btnSave" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSave_Click"/>
+                <Button x:Name="btnDelete" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDelete_Click"/>
+                <!--
                 <Button x:Name="btnWritePlayersTxt" Content="Kirjoita pelaajat (txt)" Margin="5,5,5,0" Click="btnWritePlayersTxt_Click"/>
                 <Button x:Name="btnReadPlayersTxt" Content="Lue pelaajat (txt)" Margin="5,5,5,0" Click="btnReadPlayersTxt_Click"/>
                 <Button x:Name="btnWritePlayersBin" Content="Kirjoita pelaajat (bin)" Margin="5,5,5,0" Click="btnWritePlayersBin_Click" />
                 <Button x:Name="btnReadPlayersBin" Content="Lue pelaajat (bin)" Margin="5,5,5,0" Click="btnReadPlayersBin_Click" />
                 <Button x:Name="btnWritePlayersXml" Content="Kirjoita pelaajat (xml)" Margin="5,5,5,0" Click="btnWritePlayersXml_Click" />
                 <Button x:Name="btnReadPlayersXml" Content="Lue pelaajat (xml)" Margin="5,5,5,0" Click="btnReadPlayersXml_Click" />
-                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,5,5,0" Click="btnSaveToDatabase_Click" Visibility="Hidden"/>
+                -->
+                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,15,5,0" Click="btnSaveToDatabase_Click" />
                 <Button x:Name="btnExit" Content="Lopetus" Margin="5,5,5,0" Click="btnExit_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <ListBox x:Name="lstPlayers" Width="200" Height="190" SelectionChanged="lstPlayers_SelectionChanged" />
+                <ListBox 
+                    x:Name="lstPlayers"
+                    Width="200"
+                    Height="270"
+                    ItemsSource="{Binding}"
+                    ItemTemplate="{StaticResource DisplayName}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectionMode="Single"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    SelectionChanged="lstPlayers_SelectionChanged" />
+
             </StackPanel>
         </StackPanel>
         <DockPanel VerticalAlignment="Bottom">
