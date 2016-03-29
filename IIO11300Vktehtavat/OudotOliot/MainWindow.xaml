@@ -14,20 +14,48 @@
     </Window.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                <TextBlock x:Name="tbId" Text="ID" Margin="5,7,5,0" IsEnabled="False" />
-                <TextBlock x:Name="tbFirstName" Text="Etunimi" Margin="5,7,5,0" />
-                <TextBlock x:Name="tbLastName" Text="Sukunimi" Margin="5,7,5,0" />
-                <TextBlock x:Name="tbPrice" Text="Siirtohinta" Margin="5,7,5,0" />
-                <TextBlock x:Name="tbTeam" Text="Seura" Margin="5,7,0,0" />
-            </StackPanel>
-            <StackPanel Name="spPlayer" Orientation="Vertical">
-                <TextBox x:Name="txtId" Text="{Binding Id}" Margin="5,5,0,0" IsEnabled="False" />
-                <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" MinWidth="120" Margin="5,5,0,0" />
-                <TextBox x:Name="txtLastName" Text="{Binding LastName}" MinWidth="120" Margin="5,5,0,0" />
-                <TextBox x:Name="txtPrice" Text="{Binding Price}" MinWidth="120" Margin="5,5,0,0" />
-                <ComboBox x:Name="cboTeam" Text="{Binding Team}" Margin="5,5,0,0" />
-            </StackPanel>
+
+            <Grid Name="spPlayer">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock x:Name="tbId" Text="ID" Width="55" IsEnabled="False" Margin="5" />
+                    <TextBox x:Name="txtId" Text="{Binding Id, Mode=OneWay}" Margin="5" MinWidth="120" IsEnabled="False" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock x:Name="tbFirstName" Text="Etunimi" Width="55" Margin="5" />
+                    <TextBox x:Name="txtFirstName" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock x:Name="tbLastName" Text="Sukunimi" Width="55" Margin="5" />
+                    <TextBox x:Name="txtLastName" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
+                    <TextBlock x:Name="tbPrice" Text="Siirtohinta" Width="55" Margin="5" />
+                    <TextBox x:Name="txtPrice" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal">
+                    <TextBlock x:Name="tbTeam" Text="Seura" Width="55" Margin="5" />
+                    <ComboBox x:Name="cboTeam" Text="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                </StackPanel>
+
+            </Grid> 
+            
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btnNew" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnNew_Click"/>
                 <Button x:Name="btnSave" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSave_Click"/>

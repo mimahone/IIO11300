@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -23,11 +24,8 @@ namespace JAMK.IT.IIO11300
     {
       // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla (+ Jokerit koska esiintyy tietokannassa)
       cboTeam.ItemsSource = new string[] { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
-
-      string message = "";
-      lstPlayers.DataContext = Players.GetPlayers(out message);
-
-      cboTeam.SelectedIndex = 0;
+      Players.RefreshPlayers();
+      lstPlayers.DataContext = Players.PlayerList;
       txtFirstName.Focus();
     }
 
@@ -110,23 +108,18 @@ namespace JAMK.IT.IIO11300
             throw new Exception("saman niminen pelaaja on jo listalla!");
           }
 
-          string message = "";
           if (player.Id > 0)
           {
             player.Status = Status.Modified;
-            Players.UpdatePlayer(player, out message);
+            lblInfo.Text = string.Format("Pelaajan {0} tiedot päivitetty tallennusta varten", player.FullName);
           }
           else
           {
-            player.Status = Status.Created;
-            Players.InsertPlayer(player, out message);
+            ((ObservableCollection<Player>)lstPlayers.DataContext).Add(player);
+            lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player);
+            lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
+            lblInfo.Text = string.Format("Uusi pelaaja {0} lisätty tallennusta varten", player.FullName);
           }
-
-          string msg = "";
-          lstPlayers.DataContext = Players.GetPlayers(out msg);
-
-          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player.DisplayName);
-          lblInfo.Text = message;
         }
         catch (Exception ex)
         {
@@ -149,13 +142,20 @@ namespace JAMK.IT.IIO11300
         {
           string message = "";
 
-          if (Players.DeletePlayer(player, out message) > 0)
+          if (player.Id > 0)
+          { 
+            if (Players.DeletePlayer(player, out message) > 0)
+            {
+              player.Status = Status.Deleted;
+              ((ObservableCollection<Player>)lstPlayers.DataContext).Remove(player);
+            }
+          }
+          else // When not yet saved will be deleted ie. Id = 0
           {
-            player.Status = Status.Deleted;
             ((ObservableCollection<Player>)lstPlayers.DataContext).Remove(player);
-            spPlayer.DataContext = null;
           }
 
+          spPlayer.DataContext = null;
           lblInfo.Text = message;
         }
       }
@@ -171,8 +171,8 @@ namespace JAMK.IT.IIO11300
       {
         string message = "";
         Players.SaveChangesToDatabase(out message);
-        string msg = "";
-        lstPlayers.DataContext = Players.GetPlayers(out msg);
+        Players.RefreshPlayers();
+        lstPlayers.DataContext = Players.PlayerList;
         lblInfo.Text = message;
       }
       catch (Exception ex)
@@ -261,8 +261,7 @@ namespace JAMK.IT.IIO11300
 
         if (sfd.ShowDialog() == true)
         {
-          string message = "";
-          DBPlayers.SerializePlayersToBinFile(sfd.FileName, Players.GetPlayers(out message));
+          DBPlayers.SerializePlayersToBinFile(sfd.FileName, Players.PlayerList);
           lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
         }
       }
@@ -314,8 +313,7 @@ namespace JAMK.IT.IIO11300
 
         if (sfd.ShowDialog() == true)
         {
-          string message = "";
-          DBPlayers.SerializePlayersToXmlFile(sfd.FileName, Players.GetPlayers(out message));
+          DBPlayers.SerializePlayersToXmlFile(sfd.FileName, Players.PlayerList);
           lblInfo.Text = string.Format("{0}-tiedostoon serialisointi on suoritettu", sfd.FileName);
         }
       }
@@ -348,8 +346,19 @@ namespace JAMK.IT.IIO11300
 
     private void btnExit_Click(object sender, RoutedEventArgs e)
     {
+      if (Players.IsDirty)
+      {
+        MessageBoxResult result = MessageBox.Show(
+          "Muutoksia ei ole tallennettu. Tallennetaanko nyt?", "Tallentamattomia muutoksia",
+          MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        if (result == MessageBoxResult.Yes)
+        {
+          string msg = "";
+          Players.SaveChangesToDatabase(out msg);
+        }
+      }
+
       Application.Current.Shutdown();
     }
-
   }
 }
