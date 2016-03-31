@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="year" Type="int" />
+          <Property Name="author" Type="nvarchar" MaxLength="50" />
+          <Property Name="country" Type="nvarchar" MaxLength="20" />
+          <Property Name="price" Type="smallmoney" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="nchar" MaxLength="10" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Orderitems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="bookid" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="odate" Type="date" Nullable="false" />
+          <Property Name="customerid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Orderitems_Books1">
+          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="Orderitems" Type="Self.Orderitems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orderitems">
+              <PropertyRef Name="bookid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orderitems_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Orderitems" Type="Self.Orderitems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderitems">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookShopModelStoreContainer">
+          <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orderitems" EntityType="Self.Orderitems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Orderitems_Books1" Association="Self.FK_Orderitems_Books1">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Orderitems" EntitySet="Orderitems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orderitems_Orders" Association="Self.FK_Orderitems_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orderitems" EntitySet="Orderitems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="4" />
+          <NavigationProperty Name="Orderitems" Relationship="Self.FK_Orderitems_Books1" FromRole="Books" ToRole="Orderitems" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orderitem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="bookid" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Orderitems_Books1" FromRole="Orderitems" ToRole="Books" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Orderitems_Orders" FromRole="Orderitems" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="odate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="customerid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Orderitems" Relationship="Self.FK_Orderitems_Orders" FromRole="Orders" ToRole="Orderitems" />
+        </EntityType>
+        <Association Name="FK_Orderitems_Books1">
+          <End Role="Books" Type="Self.Book" Multiplicity="1" />
+          <End Role="Orderitems" Type="Self.Orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orderitems">
+              <PropertyRef Name="bookid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orderitems_Orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Orderitems" Type="Self.Orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderitems">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Orderitems" EntityType="Self.Orderitem" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <AssociationSet Name="FK_Orderitems_Books1" Association="Self.FK_Orderitems_Books1">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Orderitems" EntitySet="Orderitems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orderitems_Orders" Association="Self.FK_Orderitems_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orderitems" EntitySet="Orderitems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookShopModelStoreContainer" CdmEntityContainer="BookShopEntities">
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookShopModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="BookShopModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orderitems">
+            <EntityTypeMapping TypeName="BookShopModel.Orderitem">
+              <MappingFragment StoreEntitySet="Orderitems">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="bookid" ColumnName="bookid" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="BookShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="odate" ColumnName="odate" />
+                <ScalarProperty Name="customerid" ColumnName="customerid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

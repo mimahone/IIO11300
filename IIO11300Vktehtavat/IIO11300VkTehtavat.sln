@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H10ADOBlanco", "IIO13200-AD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H11BookShop", "H10BookShop\H11BookShop.csproj", "{B6043BCC-0800-4C1B-A70E-4418F6639E3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H12BookShopEF", "H12BookShopEF\H12BookShopEF.csproj", "{061E3E54-931A-43BC-9FBF-A7F08D7E2C36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{B6043BCC-0800-4C1B-A70E-4418F6639E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6043BCC-0800-4C1B-A70E-4418F6639E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6043BCC-0800-4C1B-A70E-4418F6639E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{061E3E54-931A-43BC-9FBF-A7F08D7E2C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061E3E54-931A-43BC-9FBF-A7F08D7E2C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061E3E54-931A-43BC-9FBF-A7F08D7E2C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061E3E54-931A-43BC-9FBF-A7F08D7E2C36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
