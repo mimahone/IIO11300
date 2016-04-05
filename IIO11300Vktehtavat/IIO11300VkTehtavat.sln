@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinLotto", "WinLotto\WinLot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3MittausData", "H3MittausData\H3MittausData.csproj", "{8E18F019-4FFD-4202-9C73-0EA0DAE3521B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OudotOliot", "OudotOliot\OudotOliot.csproj", "{7FA16C37-4BA9-4485-988C-F3F55CA52180}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMLiiga", "OudotOliot\SMLiiga.csproj", "{7FA16C37-4BA9-4485-988C-F3F55CA52180}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H4TyontekijatConsole", "H4TyontekijaConsole\H4TyontekijatConsole.csproj", "{5BE93B4D-ADE4-4637-B523-EB88D582AE1C}"
 EndProject

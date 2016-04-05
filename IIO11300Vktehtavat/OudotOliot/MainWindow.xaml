@@ -9,7 +9,7 @@
     <Window.Resources>
         <!-- Malli listboxin tiedon esittämistä varten -->
         <DataTemplate x:Key="DisplayName">
-            <Label Content="{Binding DisplayName}" />
+            <Label Content="{Binding Kokonimi}" />
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -31,35 +31,35 @@
 
                 <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
                     <TextBlock x:Name="tbId" Text="ID" Width="55" IsEnabled="False" Margin="5" />
-                    <TextBox x:Name="txtId" Text="{Binding Id, Mode=OneWay}" Margin="5" MinWidth="120" IsEnabled="False" />
+                    <TextBox x:Name="txtId" Text="{Binding id, Mode=OneWay}" Margin="5" MinWidth="120" IsEnabled="False" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
                     <TextBlock x:Name="tbFirstName" Text="Etunimi" Width="55" Margin="5" />
-                    <TextBox x:Name="txtFirstName" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                    <TextBox x:Name="txtFirstName" Text="{Binding etunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
                     <TextBlock x:Name="tbLastName" Text="Sukunimi" Width="55" Margin="5" />
-                    <TextBox x:Name="txtLastName" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                    <TextBox x:Name="txtLastName" Text="{Binding sukunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
                     <TextBlock x:Name="tbPrice" Text="Siirtohinta" Width="55" Margin="5" />
-                    <TextBox x:Name="txtPrice" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                    <TextBox x:Name="txtPrice" Text="{Binding arvo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal">
                     <TextBlock x:Name="tbTeam" Text="Seura" Width="55" Margin="5" />
-                    <ComboBox x:Name="cboTeam" Text="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="120" />
+                    <ComboBox x:Name="cboTeam" ItemsSource="{Binding}" Margin="5" MinWidth="120" />
                 </StackPanel>
 
             </Grid> 
             
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btnNew" Content="Luo uusi pelaaja" Margin="5,5,5,0" Click="btnNew_Click"/>
-                <Button x:Name="btnSave" Content="Talleta pelaaja" Margin="5,5,5,0" Click="btnSave_Click"/>
                 <Button x:Name="btnDelete" Content="Poista pelaaja" Margin="5,5,5,0" Click="btnDelete_Click"/>
+                <Button x:Name="btnSave" Content="Talleta pelaaja" Margin="5,5,5,0" IsEnabled="False"/>
                 <!--
                 <Button x:Name="btnWritePlayersTxt" Content="Kirjoita pelaajat (txt)" Margin="5,5,5,0" Click="btnWritePlayersTxt_Click"/>
                 <Button x:Name="btnReadPlayersTxt" Content="Lue pelaajat (txt)" Margin="5,5,5,0" Click="btnReadPlayersTxt_Click"/>
@@ -68,8 +68,10 @@
                 <Button x:Name="btnWritePlayersXml" Content="Kirjoita pelaajat (xml)" Margin="5,5,5,0" Click="btnWritePlayersXml_Click" />
                 <Button x:Name="btnReadPlayersXml" Content="Lue pelaajat (xml)" Margin="5,5,5,0" Click="btnReadPlayersXml_Click" />
                 -->
-                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,15,5,0" Click="btnSaveToDatabase_Click" />
-                <Button x:Name="btnExit" Content="Lopetus" Margin="5,5,5,0" Click="btnExit_Click"/>
+                <TextBlock Text="Entity Framework" Foreground="#FF0E41F0" FontStyle="Italic" FontSize="13.333" />
+                <Button x:Name="btnGetFromDatabase" Content="Hae kannasta" Margin="5,5,5,0" Click="btnGetFromDatabase_Click" />
+                <Button x:Name="btnSaveToDatabase" Content="Tallenna kantaan" Margin="5,5,5,0" Click="btnSaveToDatabase_Click" />
+                <Button x:Name="btnExit" Content="Lopetus" Margin="5,15,5,0" Click="btnExit_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <ListBox 

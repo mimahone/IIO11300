@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
+using OudotOliot;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -14,6 +16,9 @@ namespace JAMK.IT.IIO11300
   /// </summary>
   public partial class MainWindow : Window
   {
+    SMLiigaEntities ctx;
+    ObservableCollection<Pelaaja> localPlayers;
+
     public MainWindow()
     {
       InitializeComponent();
@@ -22,44 +27,78 @@ namespace JAMK.IT.IIO11300
 
     private void IniMyStuff()
     {
+      ctx = new SMLiigaEntities();
+      ctx.Pelaajat.Load();
+      localPlayers = ctx.Pelaajat.Local;
+
+      // ComboBoxin täyttäminen pelaajien eri seuroilla
+      cboTeam.ItemsSource = localPlayers.Select(p => p.seura).Distinct().OrderBy(b => b).ToList();
+
       // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla (+ Jokerit koska esiintyy tietokannassa)
-      cboTeam.ItemsSource = new string[] { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
-      Players.RefreshPlayers();
-      lstPlayers.DataContext = Players.PlayerList;
-      txtFirstName.Focus();
+      //cboTeam.ItemsSource = new string[] { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
+      //Players.RefreshPlayers();
+      //lstPlayers.DataContext = Players.PlayerList;
+      //txtFirstName.Focus();
     }
 
     private void btnNew_Click(object sender, RoutedEventArgs e)
     {
-      Player newPlayer = new Player(0);
-      newPlayer.Status = Status.Created;
-      spPlayer.DataContext = newPlayer;
-      cboTeam.SelectedIndex = 0;
-      txtFirstName.Focus();
-      lblInfo.Text = "Uuden pelaajan lisäys";
+      // Luodaan uusi Pelaaja-olio ensin kontextiin ja sitten tietokantaan
+      Pelaaja newPlayer;
+      if (btnNew.Content.ToString() == "Luo uusi pelaaja")
+      {
+        newPlayer = new Pelaaja();
+        spPlayer.DataContext = newPlayer;
+        btnNew.Content = "Tallenna kantaan";
+        cboTeam.SelectedIndex = 0;
+        txtFirstName.Focus();
+        lblInfo.Text = "Uuden pelaajan lisäys";
+      }
+      else
+      {
+        try
+        {
+          newPlayer = (Pelaaja)spPlayer.DataContext;
+          if (HasDetailsErrors(newPlayer)) return;
+          newPlayer.seura = cboTeam.SelectedValue.ToString();
+          ctx.Pelaajat.Add(newPlayer);
+          ctx.SaveChanges();
+
+          ctx.Pelaajat.Load();
+          lstPlayers.DataContext = ctx.Pelaajat.ToList();
+          lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(newPlayer);
+          lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
+          btnNew.Content = "Luo uusi pelaaja";
+          lblInfo.Text = string.Format("Uusi pelaaja {0} lisätty kantaan", newPlayer.Kokonimi);
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message);
+        }
+      }
     }
 
-    private bool HasDetailsErrors(Player player)
+    private bool HasDetailsErrors(Pelaaja player)
     {
       bool errors = false;
       string message = "";
       TextBox txt = null;
 
-      if (string.IsNullOrWhiteSpace(player.FirstName))
+      if (string.IsNullOrWhiteSpace(player.etunimi))
       {
         txt = txtFirstName;
         message = "etunimi puuttuu";
         errors = true;
       }
 
-      if (string.IsNullOrWhiteSpace(player.LastName))
+      if (string.IsNullOrWhiteSpace(player.sukunimi))
       {
         txt = txtLastName;
         message = "sukunimi puuttuu";
         errors = true;
       }
 
-      if (player.Price < 0)
+      if (player.arvo < 0)
       {
         throw new Exception("siirtosumma ei voi olla negatiivinen!");
       }
@@ -83,80 +122,24 @@ namespace JAMK.IT.IIO11300
       }
     }
 
-    private void btnSave_Click(object sender, RoutedEventArgs e)
-    {
-      if (spPlayer.DataContext == null)
-      {
-        lblInfo.Text = "Tallennusta ei voitu suorittaa koska pelaajaa ei ole valittu listalta";
-        return;
-      }
-
-      Player player = (Player)spPlayer.DataContext;
-
-      if (HasDetailsErrors(player)) return; // Tarkistetaan että kaikissa kentissä on arvo
-
-      if (player != null)
-      {
-        try
-        {
-          // Tarkistetaan ettei saman nimistä pelaaja ole jo Pelaajat -oliokokoelmassa
-          Player found = ((ObservableCollection<Player>)lstPlayers.DataContext).FirstOrDefault(p => p.FullName == player.FullName && p.Id != player.Id);
-
-          if (found != null)
-          {
-            MessageBox.Show("Saman niminen pelaaja on jo listalla!");
-            throw new Exception("saman niminen pelaaja on jo listalla!");
-          }
-
-          if (player.Id > 0)
-          {
-            player.Status = Status.Modified;
-            lblInfo.Text = string.Format("Pelaajan {0} tiedot päivitetty tallennusta varten", player.FullName);
-          }
-          else
-          {
-            ((ObservableCollection<Player>)lstPlayers.DataContext).Add(player);
-            lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player);
-            lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
-            lblInfo.Text = string.Format("Uusi pelaaja {0} lisätty tallennusta varten", player.FullName);
-          }
-        }
-        catch (Exception ex)
-        {
-          lblInfo.Text = "Tallennusta ei voitu suorittaa koska " + ex.Message;
-        }
-      }
-    }
-
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
       try
       {
-        Player player = (Player)lstPlayers.SelectedItem;
+        Pelaaja current = (Pelaaja)spPlayer.DataContext;
 
         MessageBoxResult result = MessageBox.Show(
-          string.Format("Haluatko varmasti poistaa pelaajan {0} tiedot?", player.DisplayName), "Poiston varmistus",
+          string.Format("Haluatko varmasti poistaa pelaajan {0} tiedot?", current.Kokonimi), "Poiston varmistus",
           MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
 
         if (result == MessageBoxResult.Yes)
         {
-          string message = "";
+          ctx.Pelaajat.Remove(current);
+          ctx.SaveChanges();
+          ctx.Pelaajat.Load();
+          lstPlayers.DataContext = ctx.Pelaajat.ToList();
 
-          if (player.Id > 0)
-          { 
-            if (Players.DeletePlayer(player, out message) > 0)
-            {
-              player.Status = Status.Deleted;
-              ((ObservableCollection<Player>)lstPlayers.DataContext).Remove(player);
-            }
-          }
-          else // When not yet saved will be deleted ie. Id = 0
-          {
-            ((ObservableCollection<Player>)lstPlayers.DataContext).Remove(player);
-          }
-
-          spPlayer.DataContext = null;
-          lblInfo.Text = message;
+          lblInfo.Text = string.Format("Pelaaja {0} on poistettu", current.Kokonimi);
         }
       }
       catch (Exception ex)
@@ -165,15 +148,33 @@ namespace JAMK.IT.IIO11300
       }
     }
 
+    private void btnGetFromDatabase_Click(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        lstPlayers.DataContext = ctx.Pelaajat.ToList();
+      }
+      catch (Exception ex)
+      {
+        lblInfo.Text = "Tietojen haku kannasta ei onnistunut: " + ex.Message;
+      }
+    }
+
     private void btnSaveToDatabase_Click(object sender, RoutedEventArgs e)
     {
       try
       {
-        string message = "";
-        Players.SaveChangesToDatabase(out message);
-        Players.RefreshPlayers();
-        lstPlayers.DataContext = Players.PlayerList;
-        lblInfo.Text = message;
+        Pelaaja player = (Pelaaja)spPlayer.DataContext;
+
+        if (HasDetailsErrors(player)) return; // Tarkistetaan että kaikissa kentissä on arvo
+        ctx.SaveChanges();
+
+        ctx.Pelaajat.Load();
+        lstPlayers.DataContext = ctx.Pelaajat.ToList();
+        lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player);
+        lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
+
+        lblInfo.Text = "Muuttuneet tiedot on tallennettu";
       }
       catch (Exception ex)
       {
@@ -184,12 +185,10 @@ namespace JAMK.IT.IIO11300
     private void lstPlayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       // Jos pelaajan nimeä napsautetaan listboxissa, niin pelaajan kaikki tiedot kirjoitetaan vasemmalla oleviin tekstikenttiin tietojen muokkausta varten
-      if (lstPlayers.SelectedItem != null)
-      {
-        Player player = (Player)lstPlayers.SelectedItem;
-        spPlayer.DataContext = player;
-        lblInfo.Text = string.Format("Valittu pelaaja {0}", player.DisplayName);
-      }
+      Pelaaja player = (Pelaaja)lstPlayers.SelectedItem;
+      spPlayer.DataContext = player;
+      cboTeam.SelectedValue = player.seura;
+      lblInfo.Text = string.Format("Valittu pelaaja {0}", player.Kokonimi);
     }
 
     private void btnWritePlayersTxt_Click(object sender, RoutedEventArgs e)
@@ -346,19 +345,20 @@ namespace JAMK.IT.IIO11300
 
     private void btnExit_Click(object sender, RoutedEventArgs e)
     {
-      if (Players.IsDirty)
-      {
-        MessageBoxResult result = MessageBox.Show(
-          "Muutoksia ei ole tallennettu. Tallennetaanko nyt?", "Tallentamattomia muutoksia",
-          MessageBoxButton.YesNo, MessageBoxImage.Warning);
-        if (result == MessageBoxResult.Yes)
-        {
-          string msg = "";
-          Players.SaveChangesToDatabase(out msg);
-        }
-      }
+      //if (Players.IsDirty)
+      //{
+      //  MessageBoxResult result = MessageBox.Show(
+      //    "Muutoksia ei ole tallennettu. Tallennetaanko nyt?", "Tallentamattomia muutoksia",
+      //    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+      //  if (result == MessageBoxResult.Yes)
+      //  {
+      //    string msg = "";
+      //    Players.SaveChangesToDatabase(out msg);
+      //  }
+      //}
 
       Application.Current.Shutdown();
     }
+
   }
 }
