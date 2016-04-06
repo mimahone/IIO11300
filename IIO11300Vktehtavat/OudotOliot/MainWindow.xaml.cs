@@ -33,12 +33,6 @@ namespace JAMK.IT.IIO11300
 
       // ComboBoxin täyttäminen pelaajien eri seuroilla
       cboTeam.ItemsSource = localPlayers.Select(p => p.seura).Distinct().OrderBy(b => b).ToList();
-
-      // Käynnistyksen yhteydessä Seura -combobox täytetään nykyisillä 15 SM-Liigan seuralla (+ Jokerit koska esiintyy tietokannassa)
-      //cboTeam.ItemsSource = new string[] { "Blues", "HIFK", "HPK", "Ilves", "Jokerit", "JYP", "KalPa", "KooKoo", "Kärpät", "Lukko", "Pelicans", "SaiPa", "Sport", "Tappara", "TPS", "Ässät" };
-      //Players.RefreshPlayers();
-      //lstPlayers.DataContext = Players.PlayerList;
-      //txtFirstName.Focus();
     }
 
     private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -59,13 +53,13 @@ namespace JAMK.IT.IIO11300
         try
         {
           newPlayer = (Pelaaja)spPlayer.DataContext;
-          if (HasDetailsErrors(newPlayer)) return;
+          if (HasDetailsErrors(newPlayer)) return; // Tarkistetaan kenttien arvoja
           newPlayer.seura = cboTeam.SelectedValue.ToString();
           ctx.Pelaajat.Add(newPlayer);
           ctx.SaveChanges();
 
           ctx.Pelaajat.Load();
-          lstPlayers.DataContext = ctx.Pelaajat.ToList();
+          lstPlayers.DataContext = ctx.Pelaajat.OrderBy(p => p.seura).ThenBy(p => p.etunimi).ThenBy(p => p.sukunimi).ToList();
           lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(newPlayer);
           lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
           btnNew.Content = "Luo uusi pelaaja";
@@ -137,7 +131,7 @@ namespace JAMK.IT.IIO11300
           ctx.Pelaajat.Remove(current);
           ctx.SaveChanges();
           ctx.Pelaajat.Load();
-          lstPlayers.DataContext = ctx.Pelaajat.ToList();
+          lstPlayers.DataContext = ctx.Pelaajat.OrderBy(p => p.seura).ThenBy(p => p.etunimi).ThenBy(p => p.sukunimi).ToList();
 
           lblInfo.Text = string.Format("Pelaaja {0} on poistettu", current.Kokonimi);
         }
@@ -152,7 +146,7 @@ namespace JAMK.IT.IIO11300
     {
       try
       {
-        lstPlayers.DataContext = ctx.Pelaajat.ToList();
+        lstPlayers.DataContext = ctx.Pelaajat.OrderBy(p => p.seura).ThenBy(p => p.etunimi).ThenBy(p => p.sukunimi).ToList();
       }
       catch (Exception ex)
       {
@@ -166,15 +160,23 @@ namespace JAMK.IT.IIO11300
       {
         Pelaaja player = (Pelaaja)spPlayer.DataContext;
 
-        if (HasDetailsErrors(player)) return; // Tarkistetaan että kaikissa kentissä on arvo
+        if (player.id == 0)
+        {
+          btnNew_Click(this, null);
+          return;
+        }
+
+        player.seura = cboTeam.SelectedValue.ToString();
+
+        if (HasDetailsErrors(player)) return; // Tarkistetaan kenttien arvoja
         ctx.SaveChanges();
 
         ctx.Pelaajat.Load();
-        lstPlayers.DataContext = ctx.Pelaajat.ToList();
+        lstPlayers.DataContext = ctx.Pelaajat.OrderBy(p => p.seura).ThenBy(p => p.etunimi).ThenBy(p => p.sukunimi).ToList();
         lstPlayers.SelectedIndex = lstPlayers.Items.IndexOf(player);
         lstPlayers.ScrollIntoView(lstPlayers.SelectedItem);
 
-        lblInfo.Text = "Muuttuneet tiedot on tallennettu";
+        lblInfo.Text = string.Format("Pelaajan {0} muutetut tiedot on tallennettu kantaan", player.Kokonimi);
       }
       catch (Exception ex)
       {
@@ -188,7 +190,7 @@ namespace JAMK.IT.IIO11300
       Pelaaja player = (Pelaaja)lstPlayers.SelectedItem;
       spPlayer.DataContext = player;
       cboTeam.SelectedValue = player.seura;
-      lblInfo.Text = string.Format("Valittu pelaaja {0}", player.Kokonimi);
+      lblInfo.Text = string.Format("Valittu pelaaja: {0}", player.Kokonimi);
     }
 
     private void btnWritePlayersTxt_Click(object sender, RoutedEventArgs e)
@@ -345,18 +347,6 @@ namespace JAMK.IT.IIO11300
 
     private void btnExit_Click(object sender, RoutedEventArgs e)
     {
-      //if (Players.IsDirty)
-      //{
-      //  MessageBoxResult result = MessageBox.Show(
-      //    "Muutoksia ei ole tallennettu. Tallennetaanko nyt?", "Tallentamattomia muutoksia",
-      //    MessageBoxButton.YesNo, MessageBoxImage.Warning);
-      //  if (result == MessageBoxResult.Yes)
-      //  {
-      //    string msg = "";
-      //    Players.SaveChangesToDatabase(out msg);
-      //  }
-      //}
-
       Application.Current.Shutdown();
     }
 
