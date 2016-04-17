@@ -7,7 +7,7 @@
     <ProjectGuid>{FB6DD053-07CC-436B-BB92-D7DA86CF71CB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>H12Palkanlaskenta</RootNamespace>
+    <RootNamespace>JAMK.IT</RootNamespace>
     <AssemblyName>H12Palkanlaskenta</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -69,6 +69,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\Employee.cs" />
+    <Compile Include="Objects\FullTimeEmployee.cs" />
+    <Compile Include="Objects\PartTimeEmployee.cs" />
+    <Compile Include="Objects\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

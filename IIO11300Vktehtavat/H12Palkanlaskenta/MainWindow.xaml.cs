@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace H12Palkanlaskenta
+namespace JAMK.IT
 {
   /// <summary>
   /// Interaction logic for MainWindow.xaml
