@@ -1,0 +1,5 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijaConsole\bin\Debug\H4TyontekijaConsole.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijaConsole\bin\Debug\H4TyontekijaConsole.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijaConsole\bin\Debug\H4TyontekijaConsole.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijaConsole\obj\Debug\H4TyontekijaConsole.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijaConsole\obj\Debug\H4TyontekijaConsole.pdb

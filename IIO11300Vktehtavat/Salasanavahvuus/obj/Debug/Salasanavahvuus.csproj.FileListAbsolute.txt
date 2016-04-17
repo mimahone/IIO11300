@@ -1,0 +1,13 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\bin\Debug\Salasanavahvuus.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\bin\Debug\Salasanavahvuus.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\bin\Debug\Salasanavahvuus.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Salasanavahvuus\obj\Debug\Salasanavahvuus.pdb

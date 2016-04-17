@@ -1,0 +1,13 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\bin\Debug\H12Palkanlaskenta.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\bin\Debug\H12Palkanlaskenta.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\bin\Debug\H12Palkanlaskenta.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12Palkanlaskenta\obj\Debug\H12Palkanlaskenta.pdb

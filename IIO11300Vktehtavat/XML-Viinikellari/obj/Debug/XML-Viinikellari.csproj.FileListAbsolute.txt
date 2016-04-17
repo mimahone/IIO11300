@@ -1,0 +1,14 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\bin\Debug\XML-Viinikellari.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\bin\Debug\XML-Viinikellari.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\bin\Debug\XML-Viinikellari.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML_Viinikellari.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\XML-Viinikellari\obj\Debug\XML-Viinikellari.csprojResolveAssemblyReference.cache

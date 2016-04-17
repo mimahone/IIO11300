@@ -1,0 +1,13 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\bin\Debug\H4TyontekijatWpf.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\bin\Debug\H4TyontekijatWpf.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\bin\Debug\H4TyontekijatWpf.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H4TyontekijatWpf\obj\Debug\H4TyontekijatWpf.pdb

@@ -1,0 +1,16 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\bin\Debug\Viiniasiakkaat.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\bin\Debug\Viiniasiakkaat.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\bin\Debug\Viiniasiakkaat.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\Viiniasiakkaat.csprojResolveAssemblyReference.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\MainWindowCRUD.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\Viiniasiakkaat\obj\Debug\MainWindowCRUD.baml

@@ -1,0 +1,14 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\bin\Debug\WinLotto.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\bin\Debug\WinLotto.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\bin\Debug\WinLotto.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.csprojResolveAssemblyReference.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\WinLotto\obj\Debug\WinLotto.pdb

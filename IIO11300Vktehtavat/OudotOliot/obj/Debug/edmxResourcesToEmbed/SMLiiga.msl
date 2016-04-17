@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SMLiigaModelStoreContainer" CdmEntityContainer="SMLiigaEntities">
+    <EntitySetMapping Name="Pelaajat">
+      <EntityTypeMapping TypeName="SMLiigaModel.Pelaaja">
+        <MappingFragment StoreEntitySet="Pelaajat">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="etunimi" ColumnName="etunimi" />
+          <ScalarProperty Name="sukunimi" ColumnName="sukunimi" />
+          <ScalarProperty Name="seura" ColumnName="seura" />
+          <ScalarProperty Name="arvo" ColumnName="arvo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

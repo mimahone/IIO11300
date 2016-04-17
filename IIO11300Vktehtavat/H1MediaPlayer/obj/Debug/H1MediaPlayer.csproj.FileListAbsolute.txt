@@ -1,0 +1,15 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\bin\Debug\MikasMediaPlayer.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\bin\Debug\MikasMediaPlayer.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\bin\Debug\MikasMediaPlayer.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer_Content.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\H1MediaPlayer.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\H1MediaPlayer.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\MikasMediaPlayer.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H1MediaPlayer\obj\Debug\H1MediaPlayer.csprojResolveAssemblyReference.cache

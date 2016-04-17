@@ -1,0 +1,69 @@
+﻿<Window x:Class="H12Palkanlaskenta.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H12Palkanlaskenta"
+        mc:Ignorable="d"
+        Title="Oy Yritys Ab Palkanlaskenta" Height="420" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel  Background="#FF63CEF1" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="True">
+            
+            <StackPanel DockPanel.Dock="Bottom">
+                <StatusBar>
+                    <StatusBarItem>
+                        <TextBlock x:Name="tbMessage" Text="StatusBar with TextBlock named as tbMessage" />
+                    </StatusBarItem>
+                </StatusBar>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <StackPanel Orientation="Vertical" MinWidth="200">
+                    <TextBox Margin="0" AcceptsReturn="True" TextWrapping="Wrap" Height="350" />
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" MinWidth="200">
+                    <GroupBox Header="Työntekijän tiedot">
+                        <StackPanel>
+                            <TextBlock Text="Etunimi" Margin="5" />
+                            <TextBox x:Name="txtFirstName" Text="{Binding etunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            
+                            <TextBlock Text="Sukunimi" Margin="5" />
+                            <TextBox x:Name="txtLastName" Text="{Binding sukunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+
+                            <TextBlock Text="Työntekijänumero" Margin="5" />
+                            <TextBox x:Name="txtWorkerNumber" Text="{Binding tyontekijanro, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+
+                            <TextBlock Text="Titteli" Margin="5" />
+                            <TextBox x:Name="txtPosition" Text="{Binding titteli, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+
+                            <TextBlock Text="Palkka" Margin="5" />
+                            <TextBox x:Name="txtFee" Text="{Binding palkka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+
+                            <TextBlock Text="Työsuhde" Margin="5" />
+                            <RadioButton Content="vakituinen" Margin="5" IsChecked="True" />
+                            <RadioButton Content="osa-aikainen" Margin="5" />
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <Button x:Name="btnAdd" Content="Lisää" Margin="3" Width="70" Click="btnAdd_Click" />
+                                <Button x:Name="btnUpdate" Content="Päivitä" Margin="3" Width="70" Click="btnUpdate_Click" />
+                                <Button x:Name="btnDelete" Content="Poista" Margin="3" Width="70" Click="btnDelete_Click" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" MinWidth="140">
+                    <GroupBox Header="Palkanlaskenta">
+                        <StackPanel>
+                            <Button x:Name="btnGetWorkers" Content="Hae työntekijät" Margin="5" Click="btnGetWorkers_Click" />
+                            <Button x:Name="btnCalculate" Content="Laske" Margin="5" Click="btnCalculate_Click" />
+
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\bin\Debug\ADONET.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\bin\Debug\ADONET.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\bin\Debug\ADONET.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\About.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\About.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\ADONET_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\ADONET.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\JAMK.ICT.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\H10ADOBlanco.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\ADONET.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\ADONET.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\IIO13200-ADONET-DEMO-master\obj\Debug\H10ADOBlanco.csprojResolveAssemblyReference.cache
