@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace JAMK.IT
 {
-  public class Person : INotifyPropertyChanged
+  public class Person
   {
     #region PROPERTIES
 
@@ -69,19 +68,5 @@ namespace JAMK.IT
     }
 
     #endregion CONSTRUCTORS
-
-    #region INotifyPropertyChanged Members
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void RaisePropertyChanged(string propName)
-    {
-      if (PropertyChanged != null)
-      {
-        PropertyChanged(this, new PropertyChangedEventArgs(propName));
-      }
-    }
-
-    #endregion INotifyPropertyChanged Members
   }
 }

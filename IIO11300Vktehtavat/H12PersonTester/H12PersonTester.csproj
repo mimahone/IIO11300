@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB6DD053-07CC-436B-BB92-D7DA86CF71CB}</ProjectGuid>
+    <ProjectGuid>{9A33900B-5429-460B-9D4C-A6DE98C945B1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JAMK.IT</RootNamespace>
-    <AssemblyName>H12Palkanlaskenta</AssemblyName>
+    <AssemblyName>H12PersonTester</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -70,10 +70,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Objects\Employee.cs" />
-    <Compile Include="Objects\FullTimeEmployee.cs" />
-    <Compile Include="Objects\PartTimeEmployee.cs" />
-    <Compile Include="Objects\Person.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

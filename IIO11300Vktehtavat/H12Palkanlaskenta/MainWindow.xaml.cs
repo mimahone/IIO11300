@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JAMK.IT
 {
@@ -20,9 +8,40 @@ namespace JAMK.IT
   /// </summary>
   public partial class MainWindow : Window
   {
+    Company company = new Company();
+    Employee person = null;
+
     public MainWindow()
     {
       InitializeComponent();
+      IniMyPerson();
+      spPerson.DataContext = company.Person;
+    }
+
+    private void IniMyPerson()
+    {
+      //person = new FullTimeEmployee()
+      //{
+      //  FirstName = "Jack",
+      //  LastName = "Russell",
+      //  BirthDay = new DateTime(1985, 4, 17),
+      //  PersonID = "ddmmyyyy-123X",
+      //  EmployeeNumber = 141,
+      //  MontlySalary = 3000
+      //};
+
+      person = new PartTimeEmployee()
+      {
+        FirstName = "Jack",
+        LastName = "Russell",
+        BirthDay = new DateTime(1985, 4, 17),
+        PersonID = "ddmmyyyy-123X",
+        EmployeeNumber = 141,
+        HourlySalary = 20,
+        WorkHours = 120
+      };
+
+      company.Person = person;
     }
 
     private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -47,7 +66,8 @@ namespace JAMK.IT
 
     private void btnCalculate_Click(object sender, RoutedEventArgs e)
     {
-
+      float salary = person.CalculateSalary();
+      tbMessage.Text = string.Format("Henkilöitä {0}, palkkoja yhteensä {1}", 1, salary);
     }
 
   }

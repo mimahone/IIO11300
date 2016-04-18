@@ -19,7 +19,7 @@
 
     public FullTimeEmployee()
     {
-
+      EmployeeType = EmployeeType.FullTime;
     }
 
     #endregion CONSTRUCTORS

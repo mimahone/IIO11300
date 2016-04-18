@@ -1,0 +1,14 @@
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\bin\Debug\H12PersonTester.exe.config
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\bin\Debug\H12PersonTester.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\bin\Debug\H12PersonTester.pdb
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester.csprojResolveAssemblyReference.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\App.g.cs
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester_MarkupCompile.cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester_MarkupCompile.lref
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\MainWindow.baml
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester.g.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\JAMK.IT.Properties.Resources.resources
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester.csproj.GenerateResource.Cache
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester.exe
+C:\Users\Mika\Source\Repos\IIO11300\IIO11300Vktehtavat\H12PersonTester\obj\Debug\H12PersonTester.pdb

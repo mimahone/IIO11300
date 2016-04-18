@@ -24,25 +24,34 @@
 
                 <StackPanel Orientation="Vertical" MinWidth="200">
                     <GroupBox Header="Työntekijän tiedot">
-                        <StackPanel>
+                        <StackPanel x:Name="spPerson">
                             <TextBlock Text="Etunimi" Margin="5" />
-                            <TextBox x:Name="txtFirstName" Text="{Binding etunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            <TextBox x:Name="txtFirstName" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
                             
                             <TextBlock Text="Sukunimi" Margin="5" />
-                            <TextBox x:Name="txtLastName" Text="{Binding sukunimi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            <TextBox x:Name="txtLastName" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
 
                             <TextBlock Text="Työntekijänumero" Margin="5" />
-                            <TextBox x:Name="txtWorkerNumber" Text="{Binding tyontekijanro, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            <TextBox x:Name="txtEmployeeNumber" Text="{Binding EmployeeNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
 
                             <TextBlock Text="Titteli" Margin="5" />
-                            <TextBox x:Name="txtPosition" Text="{Binding titteli, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            <TextBox x:Name="txtPosition" Text="{Binding Position, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
 
                             <TextBlock Text="Palkka" Margin="5" />
-                            <TextBox x:Name="txtFee" Text="{Binding palkka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
+                            <TextBox x:Name="txtSalary" Text="{Binding Salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
 
                             <TextBlock Text="Työsuhde" Margin="5" />
-                            <RadioButton Content="vakituinen" Margin="5" IsChecked="True" />
-                            <RadioButton Content="osa-aikainen" Margin="5" />
+                            <RadioButton
+                                Content="vakituinen"
+                                GroupName="EmployeeType"
+                                Margin="5"
+                                IsChecked="{Binding IsFullTimeEmployee, Mode=TwoWay}" />
+
+                            <RadioButton
+                                Content="osa-aikainen"
+                                GroupName="EmployeeType"
+                                Margin="5"
+                                IsChecked="{Binding IsPartTimeEmployee, Mode=TwoWay}" />
 
                             <StackPanel Orientation="Horizontal" Height="30">
                                 <Button x:Name="btnAdd" Content="Lisää" Margin="3" Width="70" Click="btnAdd_Click" />
@@ -58,7 +67,6 @@
                         <StackPanel>
                             <Button x:Name="btnGetWorkers" Content="Hae työntekijät" Margin="5" Click="btnGetWorkers_Click" />
                             <Button x:Name="btnCalculate" Content="Laske" Margin="5" Click="btnCalculate_Click" />
-
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>

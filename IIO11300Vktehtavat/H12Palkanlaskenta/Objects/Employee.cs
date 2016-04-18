@@ -2,6 +2,12 @@
 
 namespace JAMK.IT
 {
+  public enum EmployeeType
+  {
+    FullTime = 0,
+    PartTime = 1
+  }
+
   public class Employee : Person
   {
     #region PROPERTIES
@@ -38,6 +44,31 @@ namespace JAMK.IT
       set { salary = value; }
     }
 
+    private EmployeeType employeeType;
+
+    public EmployeeType EmployeeType
+    {
+      get { return employeeType; }
+      set
+      {
+        employeeType = value;
+        RaisePropertyChanged("IsFullTimeEmployee");
+        RaisePropertyChanged("IsPartTimeEmployee");
+      }
+    }
+
+    public bool IsFullTimeEmployee
+    {
+      get { return EmployeeType == EmployeeType.FullTime; }
+      set { EmployeeType = EmployeeType.FullTime; }
+    }
+
+    public bool IsPartTimeEmployee
+    {
+      get { return EmployeeType == EmployeeType.PartTime; }
+      set { EmployeeType = EmployeeType.PartTime; }
+    }
+
     #endregion PROPERTIES
 
     #region CONSTRUCTORS
@@ -53,7 +84,7 @@ namespace JAMK.IT
 
     public virtual float CalculateSalary()
     {
-      throw new NotImplementedException();
+      return 0;
     }
 
     #endregion METHODS

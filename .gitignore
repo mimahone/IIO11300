@@ -1,0 +1,24 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/MainWindow.g.cs
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/MainWindow.baml
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop_MarkupCompile.lref
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop_MarkupCompile.cache
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.Properties.Resources.resources
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.pdb
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.g.resources
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.exe
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.csproj.GenerateResource.Cache
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/H11BookShop.csproj.FileListAbsolute.txt
+/IIO11300Vktehtavat/H10BookShop/obj/Debug/App.g.cs
+/IIO11300Vktehtavat/H10BookShop/bin/Debug/H11BookShop.pdb
+/IIO11300Vktehtavat/H10BookShop/bin/Debug/H11BookShop.exe.config
+/IIO11300Vktehtavat/H10BookShop/bin/Debug/H11BookShop.exe
+/IIO11300Vktehtavat/H12BookShopEF/obj/Debug/BookShop.exe.manifest
+/IIO11300Vktehtavat/H12BookShopEF/obj/Debug/BookShop.application
+/IIO11300Vktehtavat/H12BookShopEF/bin/Debug/BookShop.exe.manifest
+/IIO11300Vktehtavat/H12BookShopEF/bin/Debug/BookShop.application
+/IIO11300Vktehtavat/H12BookShopEF/bin/Debug/app.publish/BookShop.exe
+/IIO11300Vktehtavat/H1MediaPlayer/bin/Debug/MikasMediaPlayer.exe.config

@@ -27,7 +27,7 @@
 
     public PartTimeEmployee()
     {
-
+      EmployeeType = EmployeeType.PartTime;
     }
 
     #endregion CONSTRUCTORS
