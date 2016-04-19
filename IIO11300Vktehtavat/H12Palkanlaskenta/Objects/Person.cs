@@ -20,7 +20,13 @@ namespace JAMK.IT
     public string FirstName
     {
       get { return firstName; }
-      set { firstName = value; }
+      set
+      {
+        firstName = value;
+        RaisePropertyChanged("FirstName");
+        RaisePropertyChanged("FullName");
+        RaisePropertyChanged("DisplayName");
+      }
     }
 
     private string lastName;
@@ -28,7 +34,13 @@ namespace JAMK.IT
     public string LastName
     {
       get { return lastName; }
-      set { lastName = value; }
+      set
+      {
+        lastName = value;
+        RaisePropertyChanged("LastName");
+        RaisePropertyChanged("FullName");
+        RaisePropertyChanged("DisplayName");
+      }
     }
 
     public string FullName
@@ -76,10 +88,7 @@ namespace JAMK.IT
 
     protected void RaisePropertyChanged(string propName)
     {
-      if (PropertyChanged != null)
-      {
-        PropertyChanged(this, new PropertyChangedEventArgs(propName));
-      }
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 
     #endregion INotifyPropertyChanged Members

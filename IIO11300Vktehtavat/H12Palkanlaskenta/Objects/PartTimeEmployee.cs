@@ -4,12 +4,10 @@
   {
     #region PROPERTIES
 
-    private float hourlySalary;
-
     public float HourlySalary
     {
-      get { return hourlySalary; }
-      set { hourlySalary = value; }
+      get { return salary; }
+      set { salary = value; }
     }
 
     private int workHours;

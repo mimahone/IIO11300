@@ -4,14 +4,11 @@
   {
     #region PROPERTIES
 
-    private float montlySalary;
-
     public float MontlySalary
     {
-      get { return montlySalary; }
-      set { montlySalary = value; }
+      get { return salary; }
+      set { salary = value; }
     }
-
 
     #endregion PROPERTIES
 

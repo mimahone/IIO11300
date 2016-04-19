@@ -9,7 +9,7 @@ namespace JAMK.IT
   public partial class MainWindow : Window
   {
     Company company = new Company();
-    Employee person = null;
+    //Employee person = null;
 
     public MainWindow()
     {
@@ -20,7 +20,6 @@ namespace JAMK.IT
 
     private void IniMyStaff()
     {
-      Employees.GetEmployees();
       lstEmployees.DataContext = Employees.EmployeeList;
       //person = new FullTimeEmployee()
       //{
@@ -48,47 +47,117 @@ namespace JAMK.IT
 
     private void btnAdd_Click(object sender, RoutedEventArgs e)
     {
+      // Luodaan uusi työntekijä-olio ensin kontextiin ja sitten tietokantaan
+      Employee newEmployee;
+      if (btnAdd.Content.ToString() == "Lisää")
+      {
+        newEmployee = new Employee();
+        spEmployee.DataContext = newEmployee;
+        btnAdd.Content = "Tallenna";
+        txtFirstName.Focus();
+        tbMessage.Text = "Uuden työntekijän lisäys";
+      }
+      else
+      {
+        try
+        {
+          newEmployee = (Employee)spEmployee.DataContext;
 
+          int i = 0;
+
+          if (newEmployee.EmployeeType == EmployeeType.FullTime)
+          {
+            FullTimeEmployee fe = new FullTimeEmployee {
+              FirstName = newEmployee.FirstName,
+              LastName = newEmployee.LastName,
+              EmployeeNumber = newEmployee.EmployeeNumber,
+              Position = newEmployee.Position,
+              Salary = newEmployee.Salary
+            };
+
+            i = Employees.CreateEmployee(fe);
+          }
+          else
+          {
+            PartTimeEmployee pe = new PartTimeEmployee
+            {
+              FirstName = newEmployee.FirstName,
+              LastName = newEmployee.LastName,
+              EmployeeNumber = newEmployee.EmployeeNumber,
+              Position = newEmployee.Position,
+              Salary = newEmployee.Salary
+            };
+
+            i = Employees.CreateEmployee(pe);
+          }
+
+          if (i < 1)
+          {
+            throw new Exception("Työntekijän tallennus ei onnistunut!");
+          }
+
+          btnAdd.Content = "Lisää";
+          tbMessage.Text = string.Format("Työntekijä {0} on lisätty kantaan", newEmployee.FullName);
+        }
+        catch (Exception ex)
+        {
+          tbMessage.Text = ex.Message;
+          MessageBox.Show(ex.Message);
+        }
+      }
     }
 
     private void btnUpdate_Click(object sender, RoutedEventArgs e)
     {
-
+      try
+      {
+        int i = Employees.SaveChanges();
+        tbMessage.Text = "Muutetut tiedot on päivitetty";
+      }
+      catch (Exception ex)
+      {
+        tbMessage.Text = ex.Message;
+        MessageBox.Show(ex.Message);
+      }
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
+      try
+      {
+        var employee = (Employee)spEmployee.DataContext;
 
+        var result = MessageBox.Show("Haluatko varmasti poistaa työntekijän " + employee.FullName, "Poiston varmistus", MessageBoxButton.YesNo);
+        if (result == MessageBoxResult.Yes)
+        {
+          int i = Employees.DeleteEmployee(employee);
+          tbMessage.Text = "Työntekijä " + employee.FullName + " on poistettu";
+        }
+      }
+      catch (Exception ex)
+      {
+        tbMessage.Text = ex.Message;
+        MessageBox.Show(ex.Message);
+      }
     }
 
     private void btnGetWorkers_Click(object sender, RoutedEventArgs e)
     {
-
+      Employees.GetEmployees();
+      lstEmployees.DataContext = Employees.EmployeeList;
     }
 
     private void btnCalculate_Click(object sender, RoutedEventArgs e)
     {
-      float salary = 0;
-
-      foreach (Employee employee in Employees.EmployeeList)
-      {
-        if (employee is FullTimeEmployee)
-        {
-          salary += ((FullTimeEmployee)employee).CalculateSalary();
-        }
-        else if (employee is PartTimeEmployee)
-        {
-          salary += ((PartTimeEmployee)employee).CalculateSalary();
-        }
-        
-      }
-
-      tbMessage.Text = string.Format("Henkilöitä {0}, palkkoja yhteensä {1}", Employees.EmployeeList.Count, salary);
+      tbMessage.Text = string.Format("Henkilöitä {0}, palkkoja yhteensä {1}", Employees.EmployeeList.Count, Employees.GetSalarySum());
     }
 
     private void lstEmployees_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-      spEmployee.DataContext = (Employee)lstEmployees.SelectedItem;
+      if (lstEmployees.SelectedItem == null) return;
+      var employee = (Employee)lstEmployees.SelectedItem;
+      spEmployee.DataContext = lstEmployees.SelectedItem;
+      tbMessage.Text = "Valittu työntekijä " + employee.FullName;
     }
   }
 }

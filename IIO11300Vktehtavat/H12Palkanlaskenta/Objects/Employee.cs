@@ -25,7 +25,14 @@ namespace JAMK.IT
     public int EmployeeNumber
     {
       get { return employeeNumber; }
-      set { employeeNumber = value; }
+      set
+      {
+        employeeNumber = value;
+        RaisePropertyChanged("FirstName");
+        RaisePropertyChanged("LastName");
+        RaisePropertyChanged("FullName");
+        RaisePropertyChanged("DisplayName");
+      }
     }
 
     private DateTime startDate;
@@ -36,7 +43,7 @@ namespace JAMK.IT
       set { startDate = value; }
     }
 
-    private float salary = 42;
+    protected float salary = 42;
 
     public float Salary
     {
@@ -83,13 +90,22 @@ namespace JAMK.IT
       salary = 42;
     }
 
+    public Employee(string firstName, string lastName, int employeeNumber, string position, float salary)
+    {
+      FirstName = firstName;
+      LastName = lastName;
+      EmployeeNumber = employeeNumber;
+      Position = position;
+      Salary = salary;
+    }
+
     #endregion CONSTRUCTORS
 
     #region METHODS
 
     public virtual float CalculateSalary()
     {
-      return 0;
+      return salary;
     }
 
     #endregion METHODS
