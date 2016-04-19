@@ -69,6 +69,11 @@ namespace JAMK.IT
       set { EmployeeType = EmployeeType.PartTime; }
     }
 
+    /// <summary>
+    /// Display name property
+    /// </summary>
+    public string DisplayName { get { return string.Format("{0} = {1}", EmployeeNumber, FullName); } }
+
     #endregion PROPERTIES
 
     #region CONSTRUCTORS

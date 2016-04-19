@@ -19,12 +19,18 @@
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <StackPanel Orientation="Vertical" MinWidth="200">
-                    <TextBox Margin="0" AcceptsReturn="True" TextWrapping="Wrap" Height="350" />
+                    <ListBox 
+                        x:Name="lstEmployees"
+                        ItemsSource="{Binding}"
+                        DisplayMemberPath="DisplayName"
+                        IsSynchronizedWithCurrentItem="True"
+                        SelectionMode="Single"
+                        Height="352" SelectionChanged="lstEmployees_SelectionChanged" />
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" MinWidth="200">
                     <GroupBox Header="Työntekijän tiedot">
-                        <StackPanel x:Name="spPerson">
+                        <StackPanel x:Name="spEmployee">
                             <TextBlock Text="Etunimi" Margin="5" />
                             <TextBox x:Name="txtFirstName" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
                             
